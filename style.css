@@ -55,3 +55,14 @@ p {
 .enter-btn:hover {
   background-color: #45a049;
 }
+.pass-input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #ff69b4;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 10px;
+  width: 80%;
+  max-width: 300px;
+}
+
