@@ -65,4 +65,12 @@ p {
   width: 80%;
   max-width: 300px;
 }
+.owner-username {
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  font-size: 1.1em;
+}
+
 
