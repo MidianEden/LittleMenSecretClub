@@ -326,6 +326,50 @@ body {
         max-width: 100%;
       }
     }
+ #ownerEditor {
+      margin-top: 30px;
+      background: #fff3e0;
+      border: 1px solid #d9b48f;
+      border-radius: 10px;
+      padding: 15px;
+      display: none; /* hidden by default */
+    }
+    #ownerEditor h3 {
+      color: #a56c23;
+      margin-bottom: 10px;
+    }
+    #ownerEditor label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+    }
+    #ownerEditor input[type="text"],
+    #ownerEditor textarea {
+      width: 100%;
+      padding: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      border: 2px solid #d9b48f;
+      border-radius: 6px;
+      resize: vertical;
+    }
+    #ownerEditor textarea {
+      min-height: 60px;
+    }
+    #ownerEditor button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #a56c23;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+    }
+    #ownerEditor button:hover {
+      background: #8b5e00;
+    }
   </style>
 </head>
 <body>
@@ -338,31 +382,50 @@ body {
     <button data-tab="chat">Chat</button>
     <a href="index.html" class="logout">Logout</a>
     <button id="changeUsernameBtn">Change Username</button>
+
+    <!-- Owner editing panel -->
+    <div id="ownerEditor">
+      <h3>Owner Editor Panel</h3>
+      <form id="ownerEditForm">
+        <label for="welcomeTitle">Welcome Title</label>
+        <input type="text" id="welcomeTitle" name="welcomeTitle" maxlength="100" />
+
+        <label for="welcomeText">Welcome Text</label>
+        <textarea id="welcomeText" name="welcomeText" maxlength="1000"></textarea>
+
+        <label for="rulesText">Rules Text (Use line breaks for multiple rules)</label>
+        <textarea id="rulesText" name="rulesText" maxlength="2000"></textarea>
+
+        <label for="announcementsText">Announcements Text (Use line breaks for multiple announcements)</label>
+        <textarea id="announcementsText" name="announcementsText" maxlength="1000"></textarea>
+
+        <label for="eventsText">Events Text (Use line breaks for multiple events)</label>
+        <textarea id="eventsText" name="eventsText" maxlength="1000"></textarea>
+
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
   </nav>
 
   <main class="content">
     <section id="welcome" class="active">
-      <h1>Welcome to the Clubhouse 🏠</h1>
-      <p>Glad you’re here! The LittleMen secret club is the ultimate spot for collectors, fans, and those who appreciate the quirky charm of our bendy buddies. Kick back, explore, and enjoy the exclusive inside scoop.</p>
+      <h1>Loading...</h1>
+      <p></p>
     </section>
 
     <section id="rules">
-      <h3>Club Rules 📜</h3>
-      <p>1, You do not talk about LittleMen Secret Club.</p>
-      <p>2. Respect the vibe, positivity only.</p>
-      <p>3. Keep drops and codes confidential.</p>
-      <p>4. Share tips and tricks, but no spoilers for new releases.</p>
-      <p>5. Stay active or risk being benched!</p>
+      <h3>Loading...</h3>
+      <div id="rulesContent"></div>
     </section>
 
     <section id="announcements">
-      <h3>Announcements 📢</h3>
-      <p>• 13 AllGold LittleRobots left!</p>
+      <h3>Loading...</h3>
+      <div id="announcementsContent"></div>
     </section>
 
     <section id="events">
-      <h3>Upcoming Events 📅</h3>
-      <p>🏁 July 31: Collab upcoming</p>
+      <h3>Loading...</h3>
+      <div id="eventsContent"></div>
     </section>
 
     <section id="chat">
@@ -393,10 +456,7 @@ body {
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <script>
-    // Your very long secret owner code here:
     const OWNER_SECRET_CODE = 'rA1nB0w$OwN3r!X9VzqLpT7wF2KdJmHgYs8';
-
-    // Basic profanity word list
     const bannedWords = ['motherfucker', 'bitch', 'pussy', 'damn', 'hell', 'shit', 'fuck','cunt'];
 
     function cleanText(text) {
@@ -408,32 +468,51 @@ body {
       return clean;
     }
 
-    // Firebase config
     const firebaseConfig = {
-  apiKey: "AIzaSyCnhg3NUeTPE6A1XbmpzXzcJ7O1whhrgHY",
-  authDomain: "littlemen-174cf.firebaseapp.com",
-  databaseURL: "https://littlemen-174cf-default-rtdb.firebaseio.com",
-  projectId: "littlemen-174cf",
-  storageBucket: "littlemen-174cf.firebasestorage.app",
-  messagingSenderId: "386734084157",
-  appId: "1:386734084157:web:e3d9a69deab7c767641a54",
-  measurementId: "G-V7ZNQBEJ2P"
-};
-
+      apiKey: "AIzaSyCnhg3NUeTPE6A1XbmpzXzcJ7O1whhrgHY",
+      authDomain: "littlemen-174cf.firebaseapp.com",
+      databaseURL: "https://littlemen-174cf-default-rtdb.firebaseio.com",
+      projectId: "littlemen-174cf",
+      storageBucket: "littlemen-174cf.firebasestorage.app",
+      messagingSenderId: "386734084157",
+      appId: "1:386734084157:web:e3d9a69deab7c767641a54",
+      measurementId: "G-V7ZNQBEJ2P"
+    };
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const messagesRef = db.ref('clubhouseChat');
+    const siteContentRef = db.ref('siteContent');
 
-    // DOM Elements
+    // DOM Elements for chat
     const messagesList = document.getElementById('messages');
     const msgInput = document.getElementById('msgInput');
     const sendBtn = document.getElementById('sendBtn');
 
+    // DOM Elements for username prompt
     const usernamePrompt = document.getElementById('usernamePrompt');
     const usernameInput = document.getElementById('usernameInput');
     const usernameSubmit = document.getElementById('usernameSubmit');
     const changeUsernameBtn = document.getElementById('changeUsernameBtn');
+
+    // Owner editor panel elements
+    const ownerEditor = document.getElementById('ownerEditor');
+    const ownerEditForm = document.getElementById('ownerEditForm');
+    const welcomeTitleInput = document.getElementById('welcomeTitle');
+    const welcomeTextInput = document.getElementById('welcomeText');
+    const rulesTextInput = document.getElementById('rulesText');
+    const announcementsTextInput = document.getElementById('announcementsText');
+    const eventsTextInput = document.getElementById('eventsText');
+
+    // Content sections to update
+    const welcomeSection = document.getElementById('welcome');
+    const rulesSection = document.getElementById('rules');
+    const announcementsSection = document.getElementById('announcements');
+    const eventsSection = document.getElementById('events');
+
+    const rulesContentDiv = document.getElementById('rulesContent');
+    const announcementsContentDiv = document.getElementById('announcementsContent');
+    const eventsContentDiv = document.getElementById('eventsContent');
 
     let username = localStorage.getItem('lmUsername');
     let isOwnerUser = false;
@@ -447,17 +526,108 @@ body {
       usernamePrompt.style.display = 'none';
     }
 
-    // Updated validation function to allow owner code exactly
     function isValidUsername(name) {
       if (name === OWNER_SECRET_CODE) return true;
       return /^[a-zA-Z0-9_-]{3,20}$/.test(name);
     }
 
+    // Escape text for safety
+    function escapeHTML(str) {
+      return str.replace(/[&<>"']/g, function(m) {
+        return ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        })[m];
+      });
+    }
+
+    // Load content from Firebase
+    function loadSiteContent() {
+      siteContentRef.once('value').then(snapshot => {
+        const content = snapshot.val();
+        if (!content) {
+          // Set defaults if no content found
+          setDefaultSiteContent();
+          return;
+        }
+
+        // Welcome
+        welcomeSection.querySelector('h1').textContent = content.welcome.title || 'Welcome to the Clubhouse 🏠';
+        welcomeSection.querySelector('p').textContent = content.welcome.text || 'Glad you’re here! The LittleMen secret club is the ultimate spot for collectors, fans, and those who appreciate the quirky charm of our bendy buddies. Kick back, explore, and enjoy the exclusive inside scoop.';
+
+        // Rules
+        rulesSection.querySelector('h3').textContent = 'Club Rules 📜';
+        if(content.rules.text){
+          rulesContentDiv.innerHTML = formatMultilineText(content.rules.text);
+        } else {
+          rulesContentDiv.innerHTML = formatMultilineText(
+            `1, You do not talk about LittleMen Secret Club.\n2. Respect the vibe, positivity only.\n3. Keep drops and codes confidential.\n4. Share tips and tricks, but no spoilers for new releases.\n5. Stay active or risk being benched!`
+          );
+        }
+
+        // Announcements
+        announcementsSection.querySelector('h3').textContent = 'Announcements 📢';
+        if(content.announcements.text){
+          announcementsContentDiv.innerHTML = formatMultilineText(content.announcements.text);
+        } else {
+          announcementsContentDiv.innerHTML = '• 13 AllGold LittleRobots left!';
+        }
+
+        // Events
+        eventsSection.querySelector('h3').textContent = 'Upcoming Events 📅';
+        if(content.events.text){
+          eventsContentDiv.innerHTML = formatMultilineText(content.events.text);
+        } else {
+          eventsContentDiv.innerHTML = '🏁 July 31: Collab upcoming';
+        }
+
+        // If owner, fill editor inputs with loaded content
+        if(isOwnerUser){
+          welcomeTitleInput.value = content.welcome.title || '';
+          welcomeTextInput.value = content.welcome.text || '';
+          rulesTextInput.value = content.rules.text || '';
+          announcementsTextInput.value = content.announcements.text || '';
+          eventsTextInput.value = content.events.text || '';
+        }
+      });
+    }
+
+    function setDefaultSiteContent() {
+      welcomeSection.querySelector('h1').textContent = 'Welcome to the Clubhouse 🏠';
+      welcomeSection.querySelector('p').textContent = 'Glad you’re here! The LittleMen secret club is the ultimate spot for collectors, fans, and those who appreciate the quirky charm of our bendy buddies. Kick back, explore, and enjoy the exclusive inside scoop.';
+
+      rulesSection.querySelector('h3').textContent = 'Club Rules 📜';
+      rulesContentDiv.innerHTML = formatMultilineText(
+        `1, You do not talk about LittleMen Secret Club.\n2. Respect the vibe, positivity only.\n3. Keep drops and codes confidential.\n4. Share tips and tricks, but no spoilers for new releases.\n5. Stay active or risk being benched!`
+      );
+
+      announcementsSection.querySelector('h3').textContent = 'Announcements 📢';
+      announcementsContentDiv.innerHTML = '• 13 AllGold LittleRobots left!';
+
+      eventsSection.querySelector('h3').textContent = 'Upcoming Events 📅';
+      eventsContentDiv.innerHTML = '🏁 July 31: Collab upcoming';
+    }
+
+    // Convert multiline text into separate paragraphs or bullet points
+    function formatMultilineText(text) {
+      // Split by newline
+      const lines = text.split('\n').filter(Boolean);
+      return lines.map(line => `<p>${escapeHTML(line)}</p>`).join('');
+    }
+
+    // Chat and username handling
+
     if (!username) {
       showUsernamePrompt();
     } else {
-      // Check if stored username is owner
       isOwnerUser = (username === OWNER_SECRET_CODE);
+      if(isOwnerUser){
+        ownerEditor.style.display = 'block';
+      }
+      loadSiteContent();
       startChat();
     }
 
@@ -470,7 +640,11 @@ body {
       username = name;
       localStorage.setItem('lmUsername', username);
       isOwnerUser = (username === OWNER_SECRET_CODE);
+      if(isOwnerUser){
+        ownerEditor.style.display = 'block';
+      }
       hideUsernamePrompt();
+      loadSiteContent();
       startChat();
     };
 
@@ -479,18 +653,16 @@ body {
     });
 
     changeUsernameBtn.addEventListener('click', () => {
-      usernameInput.value = '';  // Clear input for fresh username
+      usernameInput.value = '';
       showUsernamePrompt();
     });
 
     function startChat() {
-      messagesRef.limitToLast(50).off(); // Clear previous listeners to prevent duplicates
-
-      messagesList.innerHTML = ''; // Clear old messages on username change
+      messagesRef.limitToLast(50).off();
+      messagesList.innerHTML = '';
 
       messagesRef.limitToLast(50).on('child_added', snapshot => {
         const msg = snapshot.val();
-
         const li = document.createElement('li');
 
         if (msg.user === OWNER_SECRET_CODE) {
@@ -516,19 +688,44 @@ body {
       });
     }
 
-    function escapeHTML(str) {
-      return str.replace(/[&<>"']/g, function(m) {
-        return ({
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#39;'
-        })[m];
-      });
-    }
+    // Owner form submission to save changes
+    ownerEditForm.addEventListener('submit', e => {
+      e.preventDefault();
 
-    // Tab switching logic
+      if (!isOwnerUser) {
+        alert('You are not authorized to make changes.');
+        return;
+      }
+
+      // Clean inputs before saving
+      const newContent = {
+        welcome: {
+          title: welcomeTitleInput.value.trim(),
+          text: welcomeTextInput.value.trim()
+        },
+        rules: {
+          text: rulesTextInput.value.trim()
+        },
+        announcements: {
+          text: announcementsTextInput.value.trim()
+        },
+        events: {
+          text: eventsTextInput.value.trim()
+        }
+      };
+
+      // Save to Firebase
+      siteContentRef.set(newContent)
+        .then(() => {
+          alert('Site content updated successfully!');
+          loadSiteContent(); // Reload content so UI updates immediately
+        })
+        .catch(err => {
+          alert('Failed to update content: ' + err.message);
+        });
+    });
+
+    // Tab switching logic (unchanged)
     const tabButtons = document.querySelectorAll('nav.sidebar button');
     const tabSections = document.querySelectorAll('main.content section');
 
