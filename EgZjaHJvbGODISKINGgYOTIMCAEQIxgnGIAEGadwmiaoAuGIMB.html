@@ -326,7 +326,7 @@ body {
         max-width: 100%;
       }
     }
-   </style>
+  </style>
 </head>
 <body>
   <nav class="sidebar">
@@ -348,7 +348,7 @@ body {
 
     <section id="rules">
       <h3>Club Rules 📜</h3>
-      <p>1. You do not talk about LittleMen Secret Club.</p>
+      <p>1, You do not talk about LittleMen Secret Club.</p>
       <p>2. Respect the vibe, positivity only.</p>
       <p>3. Keep drops and codes confidential.</p>
       <p>4. Share tips and tricks, but no spoilers for new releases.</p>
@@ -388,11 +388,27 @@ body {
     </div>
   </div>
 
-  <!-- Firebase SDK and Initialization -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getDatabase, ref, push, onChildAdded, limitToLast, off } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+  <!-- Firebase SDK (compat version) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
+  <script>
+    // Your very long secret owner code here:
+    const OWNER_SECRET_CODE = 'rA1nB0w$OwN3r!X9VzqLpT7wF2KdJmHgYs8';
+
+    // Basic profanity word list
+    const bannedWords = ['motherfucker', 'bitch', 'pussy', 'damn', 'hell', 'shit', 'fuck','cunt'];
+
+    function cleanText(text) {
+      let clean = text;
+      bannedWords.forEach(word => {
+        const regex = new RegExp('\\b' + word + '\\b', 'gi');
+        clean = clean.replace(regex, '***');
+      });
+      return clean;
+    }
+
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyCnhg3NUeTPE6A1XbmpzXzcJ7O1whhrgHY",
       authDomain: "littlemen-174cf.firebaseapp.com",
@@ -404,25 +420,15 @@ body {
       measurementId: "G-V7ZNQBEJ2P"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    const messagesRef = ref(db, 'clubhouseChat');
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const messagesRef = db.ref('clubhouseChat');
 
-    const OWNER_SECRET_CODE = 'rA1nB0w$OwN3r!X9VzqLpT7wF2KdJmHgYs8';
-    const bannedWords = ['motherfucker', 'bitch', 'pussy', 'damn', 'hell', 'shit', 'fuck', 'cunt'];
-
-    const cleanText = (text) =>
-      bannedWords.reduce((acc, word) =>
-        acc.replace(new RegExp(`\\b${word}\\b`, 'gi'), '***'), text);
-
-    const escapeHTML = (str) =>
-      str.replace(/[&<>"']/g, m => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      })[m]);
-
+    // DOM Elements
     const messagesList = document.getElementById('messages');
     const msgInput = document.getElementById('msgInput');
     const sendBtn = document.getElementById('sendBtn');
+
     const usernamePrompt = document.getElementById('usernamePrompt');
     const usernameInput = document.getElementById('usernameInput');
     const usernameSubmit = document.getElementById('usernameSubmit');
@@ -431,54 +437,38 @@ body {
     let username = localStorage.getItem('lmUsername');
     let isOwnerUser = false;
 
-    const showUsernamePrompt = () => usernamePrompt.style.display = 'flex';
-    const hideUsernamePrompt = () => usernamePrompt.style.display = 'none';
-    const isValidUsername = name =>
-      name === OWNER_SECRET_CODE || /^[a-zA-Z0-9_-]{3,20}$/.test(name);
+    function showUsernamePrompt() {
+      usernamePrompt.style.display = 'flex';
+      usernameInput.focus();
+    }
 
-    const startChat = () => {
-      off(messagesRef);
-      messagesList.innerHTML = '';
+    function hideUsernamePrompt() {
+      usernamePrompt.style.display = 'none';
+    }
 
-      onChildAdded(limitToLast(messagesRef, 50), snapshot => {
-        const msg = snapshot.val();
-        const li = document.createElement('li');
-        li.innerHTML = msg.user === OWNER_SECRET_CODE
-          ? `<strong class="owner-username">Owner</strong>: ${escapeHTML(msg.text)}`
-          : `<strong>${escapeHTML(msg.user)}</strong>: ${escapeHTML(msg.text)}`;
-        messagesList.appendChild(li);
-        messagesList.scrollTop = messagesList.scrollHeight;
-      });
-
-      sendBtn.onclick = () => {
-        let text = msgInput.value.trim();
-        if (!text) return;
-        text = cleanText(text);
-        push(messagesRef, { user: username, text });
-        msgInput.value = '';
-      };
-
-      msgInput.addEventListener('keyup', e => {
-        if (e.key === 'Enter') sendBtn.onclick();
-      });
-    };
+    // Updated validation function to allow owner code exactly
+    function isValidUsername(name) {
+      if (name === OWNER_SECRET_CODE) return true;
+      return /^[a-zA-Z0-9_-]{3,20}$/.test(name);
+    }
 
     if (!username) {
       showUsernamePrompt();
     } else {
-      isOwnerUser = username === OWNER_SECRET_CODE;
+      // Check if stored username is owner
+      isOwnerUser = (username === OWNER_SECRET_CODE);
       startChat();
     }
 
     usernameSubmit.onclick = () => {
       const name = usernameInput.value.trim();
       if (!isValidUsername(name)) {
-        alert('Username must be 3-20 characters or match the owner code.');
+        alert('Username must be 3-20 characters, letters, numbers, underscores or dashes only.');
         return;
       }
       username = name;
       localStorage.setItem('lmUsername', username);
-      isOwnerUser = username === OWNER_SECRET_CODE;
+      isOwnerUser = (username === OWNER_SECRET_CODE);
       hideUsernamePrompt();
       startChat();
     };
@@ -487,23 +477,69 @@ body {
       if (e.key === 'Enter') usernameSubmit.onclick();
     });
 
-    changeUsernameBtn.onclick = () => {
-      usernameInput.value = '';
+    changeUsernameBtn.addEventListener('click', () => {
+      usernameInput.value = '';  // Clear input for fresh username
       showUsernamePrompt();
-    };
+    });
 
-    // ✅ Fixed tab switching logic: only targets buttons with data-tab
-    document.querySelectorAll('nav.sidebar button[data-tab]').forEach(btn => {
+    function startChat() {
+      messagesRef.limitToLast(50).off(); // Clear previous listeners to prevent duplicates
+
+      messagesList.innerHTML = ''; // Clear old messages on username change
+
+      messagesRef.limitToLast(50).on('child_added', snapshot => {
+        const msg = snapshot.val();
+
+        const li = document.createElement('li');
+
+        if (msg.user === OWNER_SECRET_CODE) {
+          li.innerHTML = `<strong class="owner-username">Owner</strong>: ${escapeHTML(msg.text)}`;
+        } else {
+          li.innerHTML = `<strong>${escapeHTML(msg.user)}</strong>: ${escapeHTML(msg.text)}`;
+        }
+
+        messagesList.appendChild(li);
+        messagesList.scrollTop = messagesList.scrollHeight;
+      });
+
+      sendBtn.onclick = () => {
+        let text = msgInput.value.trim();
+        if (!text) return;
+        text = cleanText(text);
+        messagesRef.push({ user: username, text });
+        msgInput.value = '';
+      };
+
+      msgInput.addEventListener('keyup', e => {
+        if (e.key === 'Enter') sendBtn.onclick();
+      });
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>"']/g, function(m) {
+        return ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        })[m];
+      });
+    }
+
+    // Tab switching logic
+    const tabButtons = document.querySelectorAll('nav.sidebar button');
+    const tabSections = document.querySelectorAll('main.content section');
+
+    tabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        // Remove all active classes
-        document.querySelectorAll('nav.sidebar button[data-tab]').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('main.content section').forEach(s => s.classList.remove('active'));
+        tabButtons.forEach(b => b.classList.remove('active'));
+        tabSections.forEach(s => s.classList.remove('active'));
 
-        // Activate clicked tab and corresponding section
         btn.classList.add('active');
         const tabId = btn.getAttribute('data-tab');
         const section = document.getElementById(tabId);
-        if (section) section.classList.add('active');
+        if(section) section.classList.add('active');
       });
     });
   </script>
