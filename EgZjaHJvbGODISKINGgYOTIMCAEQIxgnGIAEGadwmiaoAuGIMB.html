@@ -623,14 +623,27 @@ secretCodeSubmit.onclick = () => {
   const enteredCode = secretCodeInput.value.trim();
   if (enteredCode === SECRET_ACCESS_CODE) {
     hideSecretCodePrompt();
-    // Now show username prompt
-    showUsernamePrompt();
+
+    // Check if username exists
+    username = localStorage.getItem('lmUsername');
+    if (!username) {
+      showUsernamePrompt();
+    } else {
+      // username exists, set isOwnerUser and start chat directly
+      isOwnerUser = (username === OWNER_SECRET_CODE);
+      if (isOwnerUser) {
+        ownerEditor.style.display = 'block';
+      }
+      loadSiteContent();
+      startChat();
+    }
   } else {
     alert('Incorrect secret code, try again.');
     secretCodeInput.value = '';
     secretCodeInput.focus();
   }
 };
+
 
 secretCodeInput.addEventListener('keyup', e => {
   if (e.key === 'Enter') {
