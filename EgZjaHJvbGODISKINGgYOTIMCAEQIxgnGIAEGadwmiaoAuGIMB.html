@@ -248,6 +248,69 @@ body {
     #sendBtn:hover {
       background: #8b5e00;
     }
+    /* Secret code prompt overlay */
+#codePrompt {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.8); /* a bit darker for secrecy */
+  display: none; /* hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* higher than username prompt */
+  flex-direction: column;
+  color: #fff; /* white text on dark background */
+  font-family: 'Roboto Slab', serif;
+}
+
+#codePromptContent {
+  background: #3a3a3a; /* dark grey box */
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 320px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6);
+}
+
+#codePromptContent h2 {
+  margin-bottom: 20px;
+  color: #f3d96b; /* golden/yellow accent */
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+#codeInput {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.2rem;
+  border: 2px solid #f3d96b;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background: #1c1c1c;
+  color: #fff;
+  outline: none;
+  box-sizing: border-box;
+}
+
+#codeInput::placeholder {
+  color: #ccc;
+}
+
+#codeSubmit {
+  padding: 10px 25px;
+  background: #f3d96b;
+  color: #3a3a3a;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+#codeSubmit:hover {
+  background: #d1b83a;
+}
+
     /* Username prompt overlay */
     #usernamePrompt {
       position: fixed;
@@ -512,6 +575,14 @@ body {
 
     <a href="index.html" class="leave-btn">Leave Clubhouse 🚪</a>
   </main>
+<!-- Secret Code Prompt -->
+<div id="secretCodePrompt" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.7); z-index: 1100; display:flex; justify-content:center; align-items:center;">
+  <div style="background:#fff; padding:30px 40px; border-radius:12px; max-width:320px; text-align:center; box-shadow: 0 8px 15px rgba(0,0,0,0.3);">
+    <h2 style="margin-bottom:20px; font-family:'Roboto Slab', serif; color:#5a3e1b;">Enter Secret Code</h2>
+    <input id="secretCodeInput" type="password" placeholder="Secret Code" style="width:100%; padding:10px; font-size:1.1rem; border:2px solid #d9b48f; border-radius:8px; margin-bottom:15px;" />
+    <button id="secretCodeSubmit" style="padding:10px 25px; background:#a56c23; color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer; width:100%;">Submit</button>
+  </div>
+</div>
 
   <!-- Username prompt -->
   <div id="usernamePrompt">
@@ -528,6 +599,45 @@ body {
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <script>
+    const SECRET_ACCESS_CODE = 'lmn-code-001';  // your actual secret code here
+
+// Elements for secret code prompt overlay
+const secretCodePrompt = document.getElementById('secretCodePrompt');
+const secretCodeInput = document.getElementById('secretCodeInput');
+const secretCodeSubmit = document.getElementById('secretCodeSubmit');
+
+function showSecretCodePrompt() {
+  secretCodePrompt.style.display = 'flex';
+  secretCodeInput.value = '';
+  secretCodeInput.focus();
+}
+
+function hideSecretCodePrompt() {
+  secretCodePrompt.style.display = 'none';
+}
+
+// On page load, show secret code prompt before anything else
+showSecretCodePrompt();
+
+secretCodeSubmit.onclick = () => {
+  const enteredCode = secretCodeInput.value.trim();
+  if (enteredCode === SECRET_ACCESS_CODE) {
+    hideSecretCodePrompt();
+    // Now show username prompt
+    showUsernamePrompt();
+  } else {
+    alert('Incorrect secret code, try again.');
+    secretCodeInput.value = '';
+    secretCodeInput.focus();
+  }
+};
+
+secretCodeInput.addEventListener('keyup', e => {
+  if (e.key === 'Enter') {
+    secretCodeSubmit.onclick();
+  }
+});
+
     const OWNER_SECRET_CODE = 'rA1nB0w$OwN3r!X9VzqLpT7wF2KdJmHgYs8';
     const bannedWords = ['motherfucker', 'bitch', 'pussy', 'damn', 'hell', 'shit', 'fuck','cunt'];
 
