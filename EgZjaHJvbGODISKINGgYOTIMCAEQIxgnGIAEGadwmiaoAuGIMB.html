@@ -370,6 +370,77 @@ body {
     #ownerEditor button:hover {
       background: #8b5e00;
     }
+    /* Base mobile improvements */
+@media (max-width: 700px) {
+  body {
+    flex-direction: column;
+    height: auto;
+  }
+
+  nav.sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px 5px;
+    box-shadow: none;
+    overflow-x: auto;
+  }
+  nav.sidebar h2 {
+    display: none;
+  }
+  nav.sidebar button {
+    flex: 1 0 auto;
+    margin: 0 5px;
+    padding: 12px 8px;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  nav.sidebar a.logout {
+    margin-top: 0;
+    padding: 12px 8px;
+    font-size: 1rem;
+  }
+
+  main.content {
+    padding: 15px 10px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Chat container should fill width and height better */
+  #chat-container {
+    height: 400px; /* increase height on mobile for better usability */
+    margin-top: 15px;
+    padding: 10px;
+  }
+
+  #messages li {
+    max-width: 100%; /* full width messages */
+    font-size: 1rem;
+  }
+
+  #chat-input-area {
+    flex-direction: column;
+    gap: 10px;
+  }
+  #msgInput {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 12px;
+  }
+  #sendBtn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+  }
+
+  /* Owner editor panel */
+  #ownerEditor {
+    margin-top: 20px;
+    padding: 15px 10px;
+  }
+}
   </style>
 </head>
 <body>
