@@ -702,26 +702,34 @@ body {
       startChat();
     }
 
-    usernameSubmit.onclick = () => {
-      const name = usernameInput.value.trim();
-      if (!isValidUsername(name)) {
-        alert('Username must be 3-20 characters, letters, numbers, underscores or dashes only.');
-        return;
-      }
-      username = name;
-      localStorage.setItem('lmUsername', username);
-      isOwnerUser = (username === OWNER_SECRET_CODE);
-      if(isOwnerUser){
-        ownerEditor.style.display = 'block';
-      }
-      hideUsernamePrompt();
-      loadSiteContent();
-      startChat();
-    };
+   usernameSubmit.onclick = () => {
+  const name = usernameInput.value.trim();
+  if (!isValidUsername(name)) {
+    alert('Username must be 3-20 characters, letters, numbers, underscores or dashes only.');
+    return;
+  }
+  username = name;
+  localStorage.setItem('lmUsername', username);
+  isOwnerUser = (username === OWNER_SECRET_CODE);
+  if(isOwnerUser){
+    ownerEditor.style.display = 'block';
+  }
+  hideUsernamePrompt();
+
+  // Remove focus to prevent zoom on mobile
+  usernameInput.blur();
+
+  loadSiteContent();
+  startChat();
+};
 
     usernameInput.addEventListener('keyup', e => {
-      if (e.key === 'Enter') usernameSubmit.onclick();
-    });
+  if (e.key === 'Enter') {
+    usernameSubmit.onclick();
+    usernameInput.blur(); // blur after enter
+  }
+});
+
 
     changeUsernameBtn.addEventListener('click', () => {
       usernameInput.value = '';
