@@ -30,6 +30,7 @@ const usernameSubmit = document.getElementById('usernameSubmit');
 const ownerEditor = document.getElementById('ownerEditor');
 const changeUsernameBtn = document.getElementById('changeUsernameBtn');
 const triviaBtn = document.getElementById('clubTriviaBtn');
+const logoutBtn = document.querySelector('.logout');
 
 let username = localStorage.getItem('lmUsername');
 let isOwnerUser = false;
@@ -131,11 +132,12 @@ secretCodeSubmit.onclick = () => {
     setTimeout(() => {
       entryScreen.classList.add('hidden');
       if (!username) {
-        usernamePrompt.classList.remove('hidden'); // show username prompt only now
+        usernamePrompt.classList.remove('hidden');
       } else {
         isOwnerUser = (username === OWNER_SECRET_CODE);
         showOwnerPanel(isOwnerUser);
         clubhouse.classList.remove('hidden');
+        setDefaultTab();
         loadSiteContent();
         startChat();
       }
@@ -158,6 +160,7 @@ usernameSubmit.onclick = () => {
   showOwnerPanel(isOwnerUser);
   usernamePrompt.classList.add('hidden');
   clubhouse.classList.remove('hidden');
+  setDefaultTab();
   loadSiteContent();
   startChat();
 };
@@ -166,6 +169,15 @@ usernameSubmit.onclick = () => {
 changeUsernameBtn.onclick = () => {
   usernamePrompt.classList.remove('hidden');
 };
+
+// Logout button
+logoutBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  localStorage.removeItem('lmUsername');
+  clubhouse.classList.add('hidden');
+  usernamePrompt.classList.add('hidden');
+  entryScreen.classList.remove('hidden');
+});
 
 // Trivia button
 triviaBtn.onclick = () => {
@@ -204,9 +216,17 @@ document.querySelectorAll('.sidebar button[data-tab]').forEach(btn => {
   });
 });
 
+/* ==== DEFAULT TAB ==== */
+function setDefaultTab() {
+  document.querySelectorAll('.sidebar button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.content section').forEach(s => s.classList.remove('active'));
+  document.querySelector('[data-tab="welcome"]').classList.add('active');
+  document.getElementById('welcome').classList.add('active');
+}
+
 /* ==== INITIAL LOAD ==== */
 window.addEventListener('DOMContentLoaded', () => {
   clubhouse.classList.add('hidden');
-  usernamePrompt.classList.add('hidden'); // always start hidden
+  usernamePrompt.classList.add('hidden');
   entryScreen.classList.remove('hidden');
 });
