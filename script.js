@@ -206,6 +206,7 @@ document.querySelectorAll('.sidebar button[data-tab]').forEach(btn => {
 
 /* ==== INITIAL LOAD ==== */
 window.addEventListener('DOMContentLoaded', () => {
+  // Always start with clubhouse & username prompt hidden
   clubhouse.classList.add('hidden');
   usernamePrompt.classList.add('hidden');
   entryScreen.classList.remove('hidden');
