@@ -64,9 +64,12 @@ function showOwnerPanel(show) {
 /* ==== ENTRY DOOR ==== */
 secretCodeSubmit.onclick = () => {
   if (secretCodeInput.value.trim() === SECRET_ACCESS_CODE) {
+    // Hide door
     entryScreen.classList.add('hidden');
+
+    // Decide next step based on stored username
     if (!username) {
-      usernamePrompt.classList.remove('hidden');
+      usernamePrompt.classList.remove('hidden'); // show username entry
     } else {
       isOwnerUser = (username === OWNER_SECRET_CODE);
       showOwnerPanel(isOwnerUser);
@@ -77,6 +80,13 @@ secretCodeSubmit.onclick = () => {
     alert("Wrong code! Try again.");
   }
 };
+
+/* ==== PAGE LOAD ==== */
+window.addEventListener('DOMContentLoaded', () => {
+  clubhouse.classList.add('hidden'); // hide main clubhouse on start
+  usernamePrompt.classList.add('hidden'); // hide username until door is unlocked
+});
+
 
 /* ==== USERNAME LOGIN ==== */
 usernameSubmit.onclick = () => {
