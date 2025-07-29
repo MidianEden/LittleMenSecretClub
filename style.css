@@ -1,3 +1,4 @@
+/* --- Base styling from your original, cleaned up --- */
 body {
   margin: 0;
   padding: 0;
@@ -9,6 +10,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* Clubhouse doodle overlay */
+  background-image: url('https://www.transparenttextures.com/patterns/skulls.png');
+  background-blend-mode: overlay;
 }
 
 @keyframes gradient {
@@ -17,6 +22,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+/* --- Container styling --- */
 .container {
   background: white;
   border: 5px dashed #ff69b4;
@@ -39,6 +45,58 @@ p {
   color: #555;
 }
 
+/* --- Animations --- */
+main.content section {
+  animation: fadeSlide 0.5s ease;
+}
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Chat styling --- */
+#messages {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+#messages li {
+  position: relative;
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  border-radius: 15px;
+  background: #fef6e4;
+  max-width: 75%;
+  word-wrap: break-word;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+#messages li strong {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+/* Owner special bubble */
+#messages li.owner-msg {
+  background: #fff3c4;
+  border: 2px solid gold;
+  box-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+.owner-username {
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  font-size: 1.1em;
+  text-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+/* --- Buttons & inputs --- */
 .enter-btn {
   display: inline-block;
   margin-top: 25px;
@@ -51,10 +109,10 @@ p {
   transition: background-color 0.3s ease;
   box-shadow: 2px 4px 0px #388e3c;
 }
-
 .enter-btn:hover {
   background-color: #45a049;
 }
+
 .pass-input {
   padding: 10px;
   font-size: 1rem;
@@ -65,51 +123,6 @@ p {
   width: 80%;
   max-width: 300px;
 }
-.owner-username {
-  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 900;
-  font-size: 1.1em;
-}
-
-
-
-
-/* --- Added Enhancements for Playful Clubhouse --- */
-
-/* Background doodles for clubhouse vibe */
-body {
-  background-image: url('https://www.transparenttextures.com/patterns/skulls.png');
-  background-blend-mode: overlay;
-}
-
-/* Section fade and slide */
-main.content section {
-  animation: fadeSlide 0.5s ease;
-}
-@keyframes fadeSlide {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Chat bubbles */
-#messages li {
-  position: relative;
-  padding: 10px 14px;
-  border-radius: 15px;
-  background: #fef6e4;
-}
-#messages li strong {
-  display: block;
-  font-size: 0.9rem;
-  margin-bottom: 4px;
-}
-#messages li.owner-msg {
-  background: #fff3c4;
-  border: 2px solid gold;
-  box-shadow: 0 0 10px rgba(255,215,0,0.5);
-}
 
 /* Sticky chat input */
 #chat-input-area {
@@ -117,14 +130,34 @@ main.content section {
   bottom: 0;
   background: white;
   z-index: 10;
+  display: flex;
+  gap: 10px;
 }
 
-/* Owner rainbow glow */
-.owner-username {
-  text-shadow: 0 0 8px rgba(255,255,255,0.5);
+#msgInput {
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #d9b48f;
+  border-radius: 8px;
+  outline: none;
 }
 
-/* Secret code animation */
+#sendBtn {
+  padding: 10px 20px;
+  background: #a56c23;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#sendBtn:hover {
+  background: #8b5e00;
+}
+
+/* --- Secret code animation --- */
 @keyframes doorOpen {
   0% { transform: scale(0.8) rotateX(90deg); opacity: 0; }
   100% { transform: scale(1) rotateX(0deg); opacity: 1; }
@@ -133,7 +166,7 @@ main.content section {
   animation: doorOpen 0.6s ease forwards;
 }
 
-/* Mobile improvements */
+/* --- Mobile improvements --- */
 @media (max-width: 700px) {
   nav.sidebar button, nav.sidebar a.logout {
     font-size: 1.2rem;
@@ -141,8 +174,15 @@ main.content section {
   }
   #messages li {
     font-size: 1.1rem;
+    max-width: 100%;
   }
   #sendBtn {
     font-size: 1.2rem;
+    width: 100%;
+  }
+  #msgInput {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 12px;
   }
 }
