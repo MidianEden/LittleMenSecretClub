@@ -17,7 +17,8 @@
     <a href="index.html" class="logout">Logout</a>
     <button id="changeUsernameBtn">Change Username</button>
 
-    <div id="ownerEditor">
+    <!-- Owner Editor Panel - hidden by default -->
+    <div id="ownerEditor" style="display:none;">
       <h3>Owner Editor Panel</h3>
       <form id="ownerEditForm">
         <label>Welcome Title</label>
@@ -65,6 +66,7 @@
     <a href="index.html" class="leave-btn">Leave Clubhouse 🚪</a>
   </main>
 
+  <!-- Secret Code Prompt -->
   <div id="secretCodePrompt">
     <div id="codePromptContent">
       <h2>Enter Secret Code</h2>
@@ -73,6 +75,7 @@
     </div>
   </div>
 
+  <!-- Username Prompt -->
   <div id="usernamePrompt">
     <div id="usernamePromptContent">
       <h2>Enter your username</h2>
@@ -81,6 +84,7 @@
     </div>
   </div>
 
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
@@ -105,17 +109,7 @@
     const messagesRef = db.ref('clubhouseChat');
     const siteContentRef = db.ref('siteContent');
 
-    const messagesList = document.getElementById('messages');
-    const msgInput = document.getElementById('msgInput');
-    const sendBtn = document.getElementById('sendBtn');
-
-    const usernamePrompt = document.getElementById('usernamePrompt');
-    const usernameInput = document.getElementById('usernameInput');
-    const usernameSubmit = document.getElementById('usernameSubmit');
-    const changeUsernameBtn = document.getElementById('changeUsernameBtn');
-
     const ownerEditor = document.getElementById('ownerEditor');
-    const ownerEditForm = document.getElementById('ownerEditForm');
     const welcomeTitleInput = document.getElementById('welcomeTitle');
     const welcomeTextInput = document.getElementById('welcomeText');
     const rulesTextInput = document.getElementById('rulesText');
@@ -126,7 +120,6 @@
     const rulesSection = document.getElementById('rules');
     const announcementsSection = document.getElementById('announcements');
     const eventsSection = document.getElementById('events');
-
     const rulesContentDiv = document.getElementById('rulesContent');
     const announcementsContentDiv = document.getElementById('announcementsContent');
     const eventsContentDiv = document.getElementById('eventsContent');
@@ -147,8 +140,15 @@
       return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     }
 
-    function showUsernamePrompt() { usernamePrompt.style.display = 'flex'; usernameInput.focus(); }
-    function hideUsernamePrompt() { usernamePrompt.style.display = 'none'; }
+    function showUsernamePrompt() {
+      document.getElementById('usernamePrompt').style.display = 'flex';
+      document.getElementById('usernameInput').focus();
+    }
+
+    function hideUsernamePrompt() {
+      document.getElementById('usernamePrompt').style.display = 'none';
+    }
+
     function isValidUsername(name) {
       if (name === OWNER_SECRET_CODE) return true;
       return /^[a-zA-Z0-9_-]{3,20}$/.test(name);
@@ -166,7 +166,7 @@
         announcementsContentDiv.innerHTML = content.announcements.text || '';
         eventsSection.querySelector('h3').textContent = 'Upcoming Events 📅';
         eventsContentDiv.innerHTML = content.events.text || '';
-        if(isOwnerUser){
+        if (isOwnerUser) {
           welcomeTitleInput.value = content.welcome.title || '';
           welcomeTextInput.value = content.welcome.text || '';
           rulesTextInput.value = content.rules.text || '';
@@ -188,12 +188,12 @@
     }
 
     function formatMultilineText(text) {
-      return text.split('\\n').filter(Boolean).map(line => `<p>${escapeHTML(line)}</p>`).join('');
+      return text.split('\n').filter(Boolean).map(line => `<p>${escapeHTML(line)}</p>`).join('');
     }
 
     function startChat() {
       messagesRef.limitToLast(50).off();
-      messagesList.innerHTML = '';
+      document.getElementById('messages').innerHTML = '';
       messagesRef.limitToLast(50).on('child_added', snapshot => {
         const msg = snapshot.val();
         const li = document.createElement('li');
@@ -203,55 +203,68 @@
         } else {
           li.innerHTML = `<strong>${escapeHTML(msg.user)}</strong>: ${escapeHTML(msg.text)}`;
         }
-        messagesList.appendChild(li);
-        messagesList.scrollTo({ top: messagesList.scrollHeight, behavior: 'smooth' });
+        document.getElementById('messages').appendChild(li);
+        document.getElementById('messages').scrollTo({ top: document.getElementById('messages').scrollHeight, behavior: 'smooth' });
       });
-      sendBtn.onclick = () => {
-        let text = msgInput.value.trim();
+      document.getElementById('sendBtn').onclick = () => {
+        let text = document.getElementById('msgInput').value.trim();
         if (!text) return;
         text = cleanText(text);
         messagesRef.push({ user: username, text });
-        msgInput.value = '';
+        document.getElementById('msgInput').value = '';
       };
-      msgInput.addEventListener('keyup', e => { if (e.key === 'Enter') sendBtn.onclick(); });
     }
 
-    usernameSubmit.onclick = () => {
-      const name = usernameInput.value.trim();
-      if (!isValidUsername(name)) { alert('Invalid username.'); return; }
+    // Username submit
+    document.getElementById('usernameSubmit').onclick = () => {
+      const name = document.getElementById('usernameInput').value.trim();
+      if (!isValidUsername(name)) {
+        alert('Invalid username.');
+        return;
+      }
       username = name;
       localStorage.setItem('lmUsername', username);
       isOwnerUser = (username === OWNER_SECRET_CODE);
-      if (isOwnerUser) ownerEditor.style.display = 'block';
+      ownerEditor.style.display = isOwnerUser ? 'block' : 'none';
       hideUsernamePrompt();
       loadSiteContent();
       startChat();
     };
 
-    changeUsernameBtn.onclick = () => { usernameInput.value = ''; showUsernamePrompt(); };
+    // Change username
+    document.getElementById('changeUsernameBtn').onclick = () => {
+      document.getElementById('usernameInput').value = '';
+      showUsernamePrompt();
+    };
 
+    // Secret code prompt
     const secretCodePrompt = document.getElementById('secretCodePrompt');
-    const secretCodeInput = document.getElementById('secretCodeInput');
-    const secretCodeSubmit = document.getElementById('secretCodeSubmit');
-    function showSecretCodePrompt() { secretCodePrompt.style.display = 'flex'; secretCodeInput.value = ''; secretCodeInput.focus(); }
-    function hideSecretCodePrompt() { secretCodePrompt.style.display = 'none'; }
-    secretCodeSubmit.onclick = () => {
-      if (secretCodeInput.value.trim() === SECRET_ACCESS_CODE) {
-        hideSecretCodePrompt();
-        if (!username) showUsernamePrompt();
-        else { isOwnerUser = (username === OWNER_SECRET_CODE); if (isOwnerUser) ownerEditor.style.display = 'block'; loadSiteContent(); startChat(); }
+    document.getElementById('secretCodeSubmit').onclick = () => {
+      if (document.getElementById('secretCodeInput').value.trim() === SECRET_ACCESS_CODE) {
+        secretCodePrompt.style.display = 'none';
+        if (!username) {
+          showUsernamePrompt();
+        } else {
+          isOwnerUser = (username === OWNER_SECRET_CODE);
+          ownerEditor.style.display = isOwnerUser ? 'block' : 'none';
+          loadSiteContent();
+          startChat();
+        }
       } else {
         alert('Incorrect secret code, try again.');
-        secretCodeInput.value = '';
-        secretCodeInput.focus();
       }
     };
-    secretCodeInput.addEventListener('keyup', e => { if (e.key === 'Enter') secretCodeSubmit.onclick(); });
-    showSecretCodePrompt();
 
-    ownerEditForm.addEventListener('submit', e => {
+    // Show secret code on page load
+    secretCodePrompt.style.display = 'flex';
+
+    // Owner edit form save
+    document.getElementById('ownerEditForm').addEventListener('submit', e => {
       e.preventDefault();
-      if (!isOwnerUser) { alert('Not authorized'); return; }
+      if (!isOwnerUser) {
+        alert('Not authorized');
+        return;
+      }
       const newContent = {
         welcome: { title: welcomeTitleInput.value.trim(), text: welcomeTextInput.value.trim() },
         rules: { text: rulesTextInput.value.trim() },
@@ -264,6 +277,7 @@
       });
     });
 
+    // Tab navigation
     document.querySelectorAll('nav.sidebar button').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('nav.sidebar button').forEach(b => b.classList.remove('active'));
@@ -272,6 +286,14 @@
         document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
       });
     });
+
+    // If returning visitor
+    if (username) {
+      isOwnerUser = (username === OWNER_SECRET_CODE);
+      ownerEditor.style.display = isOwnerUser ? 'block' : 'none';
+      loadSiteContent();
+      startChat();
+    }
   </script>
 </body>
 </html>
