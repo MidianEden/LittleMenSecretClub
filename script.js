@@ -1,7 +1,9 @@
+/* ==== CONFIG ==== */
 const SECRET_ACCESS_CODE = 'lmn-code-001';
 const OWNER_SECRET_CODE = 'rA1nB0w$OwN3r!X9VzqLpT7wF2KdJmHgYs8';
 const bannedWords = ['motherfucker','bitch','pussy','damn','hell','shit','fuck','cunt'];
 
+/* ==== FIREBASE ==== */
 const firebaseConfig = {
   apiKey: "AIzaSyCnhg3NUeTPE6A1XbmpzXzcJ7O1whhrgHY",
   authDomain: "littlemen-174cf.firebaseapp.com",
@@ -9,15 +11,16 @@ const firebaseConfig = {
   projectId: "littlemen-174cf",
   storageBucket: "littlemen-174cf.firebasestorage.app",
   messagingSenderId: "386734084157",
-  appId: "1:386734084157:web:e3d9a69deab7c767641a54",
-  measurementId: "G-V7ZNQBEJ2P"
+  appId: "1:386734084157:web:e3d9a69deab7c767641a54"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const messagesRef = db.ref('clubhouseChat');
 const siteContentRef = db.ref('siteContent');
 
+/* ==== ELEMENTS ==== */
 const entryScreen = document.getElementById('entryScreen');
+const door = document.querySelector('.door');
 const secretCodeInput = document.getElementById('secretCodeInput');
 const secretCodeSubmit = document.getElementById('secretCodeSubmit');
 const clubhouse = document.getElementById('clubhouse');
@@ -31,6 +34,7 @@ const triviaBtn = document.getElementById('clubTriviaBtn');
 let username = localStorage.getItem('lmUsername');
 let isOwnerUser = false;
 
+/* ==== HELPERS ==== */
 function cleanText(text) {
   let clean = text;
   bannedWords.forEach(word => {
@@ -39,16 +43,20 @@ function cleanText(text) {
   });
   return clean;
 }
+
 function escapeHTML(str) {
   return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
+
 function formatMultilineText(text) {
   return text.split('\n').filter(Boolean).map(line => `<p>${escapeHTML(line)}</p>`).join('');
 }
+
 function showOwnerPanel(show) {
   ownerEditor.style.display = show ? 'block' : 'none';
 }
 
+/* ==== SITE CONTENT ==== */
 function loadSiteContent() {
   siteContentRef.once('value').then(snapshot => {
     const content = snapshot.val();
@@ -69,6 +77,7 @@ function loadSiteContent() {
   });
 }
 
+/* ==== CHAT ==== */
 function startChat() {
   const messagesList = document.getElementById('messages');
   const msgInput = document.getElementById('msgInput');
@@ -106,6 +115,7 @@ function startChat() {
   });
 }
 
+/* ==== CHAT COMMANDS ==== */
 function handleCommand(cmd) {
   if (cmd === '/roll') return `${username} rolled a ${Math.floor(Math.random() * 6) + 1}! 🎲`;
   if (cmd === '/joke') return "Why don’t ragdolls fight? They don’t have the guts. 🤭";
@@ -113,23 +123,29 @@ function handleCommand(cmd) {
   return "Unknown command.";
 }
 
+/* ==== EVENTS ==== */
+// Door entry
 secretCodeSubmit.onclick = () => {
   if (secretCodeInput.value.trim() === SECRET_ACCESS_CODE) {
-    entryScreen.classList.add('hidden');
-    if (!username) {
-      usernamePrompt.classList.remove('hidden');
-    } else {
-      isOwnerUser = (username === OWNER_SECRET_CODE);
-      showOwnerPanel(isOwnerUser);
-      clubhouse.classList.remove('hidden');
-      loadSiteContent();
-      startChat();
-    }
+    door.classList.add('open');
+    setTimeout(() => {
+      entryScreen.classList.add('hidden');
+      if (!username) {
+        usernamePrompt.classList.remove('hidden');
+      } else {
+        isOwnerUser = (username === OWNER_SECRET_CODE);
+        showOwnerPanel(isOwnerUser);
+        clubhouse.classList.remove('hidden');
+        loadSiteContent();
+        startChat();
+      }
+    }, 1000);
   } else {
     alert("Wrong code! Try again.");
   }
 };
 
+// Username submit
 usernameSubmit.onclick = () => {
   const name = usernameInput.value.trim();
   if (!/^[a-zA-Z0-9_-]{3,20}$/.test(name) && name !== OWNER_SECRET_CODE) {
@@ -146,10 +162,12 @@ usernameSubmit.onclick = () => {
   startChat();
 };
 
+// Change username
 changeUsernameBtn.onclick = () => {
   usernamePrompt.classList.remove('hidden');
 };
 
+// Trivia button
 triviaBtn.onclick = () => {
   const facts = [
     "LittleMen was founded in 2025.",
@@ -160,6 +178,7 @@ triviaBtn.onclick = () => {
   alert(facts[Math.floor(Math.random() * facts.length)]);
 };
 
+// Owner save
 document.getElementById('ownerEditForm').addEventListener('submit', e => {
   e.preventDefault();
   if (!isOwnerUser) return alert("Not authorized!");
@@ -175,6 +194,7 @@ document.getElementById('ownerEditForm').addEventListener('submit', e => {
   });
 });
 
+// Tab navigation
 document.querySelectorAll('.sidebar button[data-tab]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.sidebar button').forEach(b => b.classList.remove('active'));
@@ -184,6 +204,7 @@ document.querySelectorAll('.sidebar button[data-tab]').forEach(btn => {
   });
 });
 
+/* ==== INITIAL LOAD ==== */
 window.addEventListener('DOMContentLoaded', () => {
   clubhouse.classList.add('hidden');
   usernamePrompt.classList.add('hidden');
