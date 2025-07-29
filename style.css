@@ -1,249 +1,266 @@
-/* === Background === */
-body {
+/* === Base Reset === */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: 'Montserrat', sans-serif;
-  background: radial-gradient(circle at 30% 30%, #4b2e14, #2b1a0f);
-  background-attachment: fixed;
-  color: #f5e6c8;
-  min-height: 100vh;
+  color: #f8e7c3;
+  background: url('https://www.transparenttextures.com/patterns/wood-pattern.png') repeat;
+  background-size: 200px;
+  height: 100vh;
   display: flex;
 }
 
-/* === Sidebar (Polished Wood Look) === */
+/* === Entry Screen (Wooden Door) === */
+.entry-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('https://i.ibb.co/FH3G1hN/wooden-door-texture.jpg') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 999;
+}
+
+.entry-screen h1 {
+  font-family: 'Roboto Slab', serif;
+  color: #f8e7c3;
+  text-shadow: 2px 2px 5px #000;
+  margin-bottom: 20px;
+}
+
+.entry-screen input {
+  padding: 10px;
+  border: 2px solid #cfa84a;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.entry-screen button {
+  padding: 10px 20px;
+  font-weight: bold;
+  background: #cfa84a;
+  border: none;
+  border-radius: 6px;
+  color: #2e1c0f;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.entry-screen button:hover {
+  background: #ffdb6b;
+}
+
+.hidden { display: none; }
+
+/* === Sidebar === */
 .sidebar {
   width: 260px;
-  background: linear-gradient(180deg, #5a381e, #3e2714);
-  border-right: 3px solid #d4af37;
-  padding: 30px 20px;
+  background: url('https://www.transparenttextures.com/patterns/wood-pattern.png') repeat;
+  background-size: 250px;
+  border-right: 4px solid #d4af37;
   display: flex;
   flex-direction: column;
-  box-shadow: 4px 0 20px rgba(0,0,0,0.4);
+  padding: 20px;
 }
 
-.sidebar h2 {
+.club-sign {
   font-family: 'Roboto Slab', serif;
   background: #6e4723;
   padding: 12px;
-  border: 2px solid #d4af37;
+  border: 3px solid #d4af37;
   border-radius: 10px;
   text-align: center;
-  color: #f5e6c8;
-  text-shadow: 1px 1px 2px black;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
+  color: #f8e7c3;
 }
 
 .sidebar button,
 .sidebar a.logout {
-  background: linear-gradient(145deg, #c9a34e, #d4af37, #c9a34e);
+  background: #cfa84a;
   border: none;
-  color: #2b1a0f;
-  font-weight: 700;
-  font-size: 1.05rem;
-  padding: 12px 15px;
-  margin-bottom: 12px;
+  color: #2e1c0f;
+  font-weight: bold;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .sidebar button:hover,
 .sidebar button.active {
-  background: linear-gradient(145deg, #ffd86b, #d4af37, #ffd86b);
-  transform: translateX(3px);
-  box-shadow: 0 0 12px gold;
+  background: #ffdb6b;
+  transform: translateX(4px);
 }
 
 .sidebar a.logout {
-  margin-top: auto;
   text-align: center;
-  background: linear-gradient(145deg, #b0413e, #8a2b2b);
-  color: #fff;
-  box-shadow: 2px 4px 0 #5a1d1d;
+  margin-top: auto;
+  background: #a33e2f;
+  color: white;
 }
 .sidebar a.logout:hover {
-  background: linear-gradient(145deg, #e24a45, #b0413e);
+  background: #d14f3f;
 }
 
-/* === Content Area === */
+/* === Main Content === */
 .content {
   flex-grow: 1;
-  padding: 40px 50px;
+  padding: 30px;
   overflow-y: auto;
+  background: rgba(20, 10, 0, 0.85);
 }
 
 .content section {
   display: none;
-  animation: fadeSlide 0.6s ease;
 }
 .content section.active {
   display: block;
 }
 
-@keyframes fadeSlide {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 .content h1, .content h3 {
   font-family: 'Roboto Slab', serif;
-  color: #ffd86b;
-  margin-bottom: 20px;
-  text-shadow: 1px 1px 2px #000;
+  margin-bottom: 15px;
 }
 
 .content h1 {
-  font-size: 2.5rem;
+  font-size: 2.4rem;
+  color: #ffdb6b;
 }
 
 .content h3 {
-  font-size: 1.4rem;
-  border-bottom: 2px solid #d4af37;
-  padding-bottom: 5px;
+  color: #ffdb6b;
+  border-bottom: 2px solid #cfa84a;
+  padding-bottom: 4px;
 }
 
 /* === Chat Room === */
 #chat-container {
-  background: rgba(255, 248, 230, 0.08);
-  border: 2px solid #d4af37;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid #cfa84a;
   border-radius: 12px;
-  padding: 15px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   height: 350px;
-  box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
 }
 
 #messages {
   flex-grow: 1;
   overflow-y: auto;
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 #messages li {
-  margin-bottom: 12px;
-  padding: 10px 14px;
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.12);
-  max-width: 75%;
-  box-shadow: 1px 2px 5px rgba(0,0,0,0.4);
-  word-wrap: break-word;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: #3b2616;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
 }
 
-#messages li strong {
-  display: block;
-  margin-bottom: 3px;
-  font-size: 0.85rem;
-  color: #ffd86b;
-}
-
-/* Owner Messages */
 .owner-msg {
-  background: rgba(255, 215, 0, 0.15);
+  background: #5a3d1f;
   border: 2px solid gold;
-  box-shadow: 0 0 15px rgba(255,215,0,0.7);
-  animation: ownerPulse 2s infinite alternate;
-}
-@keyframes ownerPulse {
-  0% { box-shadow: 0 0 8px rgba(255,215,0,0.4); }
-  100% { box-shadow: 0 0 18px rgba(255,215,0,0.9); }
+  box-shadow: 0 0 8px gold;
 }
 
-.owner-username {
-  background: linear-gradient(90deg, #ffd86b, gold, #ffd86b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 900;
-}
-
-/* === Chat Input === */
 #chat-input-area {
-  margin-top: 10px;
   display: flex;
-  gap: 10px;
-  position: sticky;
-  bottom: 0;
+  margin-top: 8px;
 }
 
 #msgInput {
   flex-grow: 1;
-  padding: 10px;
-  border: 2px solid #d4af37;
-  border-radius: 8px;
-  font-size: 1rem;
-  background: rgba(255,255,255,0.1);
-  color: #f5e6c8;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #cfa84a;
 }
 
 #sendBtn {
-  background: linear-gradient(145deg, #ffd86b, #d4af37);
-  color: #2b1a0f;
+  background: #cfa84a;
   border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  padding: 10px 20px;
+  border-radius: 6px;
+  padding: 8px 14px;
+  margin-left: 6px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s;
-}
-#sendBtn:hover {
-  background: linear-gradient(145deg, #fff4c2, #ffd86b);
-  transform: scale(1.05);
 }
 
-/* === Prompts === */
-#secretCodePrompt, #usernamePrompt {
+/* === Owner Editor Panel (Bulletin Board) === */
+#ownerEditor {
+  background: url('https://www.transparenttextures.com/patterns/paper-fibers.png') repeat;
+  border: 3px solid #d4af37;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 15px;
+}
+
+#ownerEditor h3 {
+  text-align: center;
+  color: #2e1c0f;
+  background: #ffdb6b;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+#ownerEditor input, #ownerEditor textarea {
+  width: 100%;
+  margin: 6px 0;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #cfa84a;
+}
+
+#ownerEditor button {
+  width: 100%;
+  background: #cfa84a;
+  color: #2e1c0f;
+  font-weight: bold;
+  padding: 6px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+/* === Overlays (Username Prompt) === */
+.overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.8);
-  display: none;
+  background: rgba(0,0,0,0.7);
+  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-#codePromptContent, #usernamePromptContent {
-  background: linear-gradient(180deg, #5a381e, #3e2714);
-  padding: 30px 40px;
-  border-radius: 12px;
+.prompt-box {
+  background: #3b2616;
+  border: 3px solid #cfa84a;
+  border-radius: 8px;
+  padding: 20px;
   text-align: center;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.7);
-  border: 2px solid #d4af37;
 }
 
-#codePromptContent h2, #usernamePromptContent h2 {
-  font-family: 'Roboto Slab', serif;
-  color: #ffd86b;
-  margin-bottom: 20px;
+.prompt-box input {
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #cfa84a;
 }
 
-#secretCodeInput, #usernameInput {
-  width: 100%;
-  padding: 12px;
-  font-size: 1.1rem;
-  border: 2px solid #d4af37;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  background: rgba(255,255,255,0.1);
-  color: #fff8dc;
-}
-
-#secretCodeSubmit, #usernameSubmit {
-  padding: 10px 25px;
-  background: linear-gradient(145deg, #ffd86b, #d4af37);
-  color: #2b1a0f;
+.prompt-box button {
+  padding: 8px 14px;
+  background: #cfa84a;
   border: none;
-  border-radius: 8px;
-  font-weight: 700;
+  border-radius: 6px;
   cursor: pointer;
 }
-#secretCodeSubmit:hover, #usernameSubmit:hover {
-  background: linear-gradient(145deg, #fff4c2, #ffd86b);
-}
 
-/* === Mobile === */
 @media (max-width: 700px) {
   body {
     flex-direction: column;
@@ -251,26 +268,11 @@ body {
   .sidebar {
     width: 100%;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-around;
-    padding: 10px;
-    box-shadow: none;
-    border-right: none;
-    border-bottom: 3px solid #d4af37;
   }
-  .sidebar h2 { display: none; }
   .content {
-    padding: 20px;
-  }
-  #chat-container {
-    height: 400px;
-  }
-  #messages li {
-    max-width: 100%;
-  }
-  #chat-input-area {
-    flex-direction: column;
-  }
-  #sendBtn {
-    width: 100%;
+    padding: 15px;
   }
 }
+
