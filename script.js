@@ -131,7 +131,7 @@ secretCodeSubmit.onclick = () => {
     setTimeout(() => {
       entryScreen.classList.add('hidden');
       if (!username) {
-        usernamePrompt.classList.remove('hidden'); // show ONLY now
+        usernamePrompt.classList.remove('hidden'); // show username prompt only now
       } else {
         isOwnerUser = (username === OWNER_SECRET_CODE);
         showOwnerPanel(isOwnerUser);
@@ -144,7 +144,6 @@ secretCodeSubmit.onclick = () => {
     alert("Wrong code! Try again.");
   }
 };
-
 
 // Username submit
 usernameSubmit.onclick = () => {
@@ -207,8 +206,7 @@ document.querySelectorAll('.sidebar button[data-tab]').forEach(btn => {
 
 /* ==== INITIAL LOAD ==== */
 window.addEventListener('DOMContentLoaded', () => {
-  // Always start with clubhouse & username prompt hidden
   clubhouse.classList.add('hidden');
-  usernamePrompt.classList.add('hidden');
+  usernamePrompt.classList.add('hidden'); // always start hidden
   entryScreen.classList.remove('hidden');
 });
