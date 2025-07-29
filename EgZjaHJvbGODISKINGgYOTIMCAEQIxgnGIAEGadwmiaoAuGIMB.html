@@ -4,507 +4,7 @@
   <meta charset="UTF-8" />
   <title>LittleMen Clubhouse Chat</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Slab&display=swap" rel="stylesheet" />
-  <style>
-    /* General body layout */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  height: 100vh;
-}
-
-/* Sidebar styling */
-#sidebar {
-  width: 250px;
-  background-color: #111;
-  color: white;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-y: auto;
-}
-
-/* Chatroom section */
-#chatroom {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: #f2f2f2;
-}
-
-/* Messages container */
-#messages {
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-/* Input section */
-#input-area {
-  display: flex;
-  padding: 10px;
-  border-top: 1px solid #ccc;
-  background-color: white;
-}
-
-#input-area input {
-  flex-grow: 1;
-  padding: 10px;
-  font-size: 16px;
-  margin-right: 10px;
-}
-
-#input-area button {
-  padding: 10px 15px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-/* Username style */
-.owner {
-  background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
-}
-
-/* Message box */
-.message {
-  margin-bottom: 10px;
-}
-.username {
-  font-weight: bold;
-  margin-right: 5px;
-}
-.text {
-  display: inline;
-}
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: #faf3e0;
-      color: #3a3a3a;
-      display: flex;
-      min-height: 100vh;
-    }
-    nav.sidebar {
-      width: 250px;
-      background: #d9b48f;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      padding: 30px 20px;
-    }
-    nav.sidebar h2 {
-      font-family: 'Roboto Slab', serif;
-      color: #5a3e1b;
-      margin-bottom: 40px;
-      font-weight: 700;
-      font-size: 1.8rem;
-      letter-spacing: 1px;
-      text-align: center;
-    }
-    nav.sidebar button {
-      background: none;
-      border: none;
-      color: #5a3e1b;
-      text-align: left;
-      font-weight: 600;
-      font-size: 1.1rem;
-      padding: 12px 15px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    nav.sidebar button:hover,
-    nav.sidebar button.active {
-      background: #b78b55;
-      color: #fff;
-    }
-    nav.sidebar a.logout {
-      margin-top: auto;
-      font-weight: 700;
-      text-align: center;
-      padding: 14px 0;
-      background: #a56c23;
-      color: #fff;
-      border-radius: 12px;
-      text-decoration: none;
-      box-shadow: 2px 5px 0 #704b11;
-      transition: background-color 0.3s ease;
-    }
-    nav.sidebar a.logout:hover {
-      background: #8b5e00;
-    }
-    nav.sidebar #changeUsernameBtn {
-      margin-top: 12px;
-      padding: 10px 15px;
-      background: #8b5e00;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-    }
-    nav.sidebar #changeUsernameBtn:hover {
-      background: #704b00;
-    }
-    main.content {
-      flex-grow: 1;
-      padding: 40px 50px;
-      overflow-y: auto;
-      max-width: 900px;
-      display: flex;
-      flex-direction: column;
-    }
-    main.content section {
-      display: none;
-      margin-bottom: 35px;
-    }
-    main.content section.active {
-      display: block;
-    }
-    main.content h1, main.content h3 {
-      font-family: 'Roboto Slab', serif;
-      color: #8b5e34;
-      margin-bottom: 25px;
-      text-shadow: 1px 1px 0 #d6b47a;
-    }
-    main.content h1 {
-      font-size: 2.8rem;
-    }
-    main.content h3 {
-      font-size: 1.5rem;
-      color: #a56c23;
-      border-bottom: 2px solid #d9b48f;
-      padding-bottom: 6px;
-      margin-bottom: 12px;
-    }
-    main.content p {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.1rem;
-      line-height: 1.5;
-      color: #4a4031;
-    }
-    /* Chat styles */
-    #chat-container {
-      border: 1px solid #ccc;
-      background: #fff;
-      height: 300px;
-      overflow-y: auto;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 20px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    #messages {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      flex-grow: 1;
-      overflow-y: auto;
-    }
-    #messages li {
-      margin-bottom: 8px;
-      padding: 6px 10px;
-      background: #f0e6d2;
-      border-radius: 6px;
-      max-width: 75%;
-      word-wrap: break-word;
-      font-size: 1rem;
-      box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-    }
-    #messages li strong {
-      color: #6a4b1b;
-    }
-    #chat-input-area {
-      margin-top: 10px;
-      display: flex;
-      gap: 10px;
-    }
-    #msgInput {
-      flex-grow: 1;
-      padding: 10px;
-      font-size: 1rem;
-      border: 2px solid #d9b48f;
-      border-radius: 8px;
-      outline: none;
-    }
-    #sendBtn {
-      padding: 10px 20px;
-      background: #a56c23;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #sendBtn:hover {
-      background: #8b5e00;
-    }
-    /* Secret code prompt overlay */
-#codePrompt {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.8); /* a bit darker for secrecy */
-  display: none; /* hidden by default */
-  justify-content: center;
-  align-items: center;
-  z-index: 2000; /* higher than username prompt */
-  flex-direction: column;
-  color: #fff; /* white text on dark background */
-  font-family: 'Roboto Slab', serif;
-}
-
-#codePromptContent {
-  background: #3a3a3a; /* dark grey box */
-  padding: 30px 40px;
-  border-radius: 12px;
-  text-align: center;
-  max-width: 320px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6);
-}
-
-#codePromptContent h2 {
-  margin-bottom: 20px;
-  color: #f3d96b; /* golden/yellow accent */
-  font-weight: 700;
-  font-size: 1.8rem;
-}
-
-#codeInput {
-  width: 100%;
-  padding: 12px;
-  font-size: 1.2rem;
-  border: 2px solid #f3d96b;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  background: #1c1c1c;
-  color: #fff;
-  outline: none;
-  box-sizing: border-box;
-}
-
-#codeInput::placeholder {
-  color: #ccc;
-}
-
-#codeSubmit {
-  padding: 10px 25px;
-  background: #f3d96b;
-  color: #3a3a3a;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 100%;
-}
-
-#codeSubmit:hover {
-  background: #d1b83a;
-}
-
-    /* Username prompt overlay */
-    #usernamePrompt {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.7);
-      display: none; /* hidden by default */
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    #usernamePromptContent {
-      background: #fff;
-      padding: 30px 40px;
-      border-radius: 12px;
-      text-align: center;
-      max-width: 320px;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-    }
-    #usernamePromptContent h2 {
-      margin-bottom: 20px;
-      color: #5a3e1b;
-      font-family: 'Roboto Slab', serif;
-    }
-    #usernameInput {
-      width: 100%;
-      padding: 10px;
-      font-size: 1.1rem;
-      border: 2px solid #d9b48f;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-    #usernameSubmit {
-      padding: 10px 25px;
-      background: #a56c23;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      width: 100%;
-    }
-    #usernameSubmit:hover {
-      background: #8b5e00;
-    }
-    /* Owner rainbow username */
-    .owner-username {
-      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 900;
-      font-size: 1.1em;
-    }
-
-    @media (max-width: 700px) {
-      body {
-        flex-direction: column;
-      }
-      nav.sidebar {
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-around;
-        padding: 15px 10px;
-        box-shadow: none;
-      }
-      nav.sidebar h2 {
-        display: none;
-      }
-      nav.sidebar button {
-        margin-bottom: 0;
-        padding: 8px 12px;
-        font-size: 1rem;
-      }
-      main.content {
-        padding: 20px;
-        max-width: 100%;
-      }
-    }
- #ownerEditor {
-      margin-top: 30px;
-      background: #fff3e0;
-      border: 1px solid #d9b48f;
-      border-radius: 10px;
-      padding: 15px;
-      display: none; /* hidden by default */
-    }
-    #ownerEditor h3 {
-      color: #a56c23;
-      margin-bottom: 10px;
-    }
-    #ownerEditor label {
-      font-weight: 600;
-      margin-top: 10px;
-      display: block;
-    }
-    #ownerEditor input[type="text"],
-    #ownerEditor textarea {
-      width: 100%;
-      padding: 8px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1rem;
-      border: 2px solid #d9b48f;
-      border-radius: 6px;
-      resize: vertical;
-    }
-    #ownerEditor textarea {
-      min-height: 60px;
-    }
-    #ownerEditor button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #a56c23;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: background-color 0.3s ease;
-    }
-    #ownerEditor button:hover {
-      background: #8b5e00;
-    }
-    /* Base mobile improvements */
-@media (max-width: 700px) {
-  body {
-    flex-direction: column;
-    height: auto;
-  }
-
-  nav.sidebar {
-    width: 100%;
-    height: auto;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 10px 5px;
-    box-shadow: none;
-    overflow-x: auto;
-  }
-  nav.sidebar h2 {
-    display: none;
-  }
-  nav.sidebar button {
-    flex: 1 0 auto;
-    margin: 0 5px;
-    padding: 12px 8px;
-    font-size: 1rem;
-    white-space: nowrap;
-  }
-  nav.sidebar a.logout {
-    margin-top: 0;
-    padding: 12px 8px;
-    font-size: 1rem;
-  }
-
-  main.content {
-    padding: 15px 10px;
-    max-width: 100%;
-    height: auto;
-  }
-
-  /* Chat container should fill width and height better */
-  #chat-container {
-    height: 400px; /* increase height on mobile for better usability */
-    margin-top: 15px;
-    padding: 10px;
-  }
-
-  #messages li {
-    max-width: 100%; /* full width messages */
-    font-size: 1rem;
-  }
-
-  #chat-input-area {
-    flex-direction: column;
-    gap: 10px;
-  }
-  #msgInput {
-    width: 100%;
-    font-size: 1.1rem;
-    padding: 12px;
-  }
-  #sendBtn {
-    width: 100%;
-    padding: 12px;
-    font-size: 1.1rem;
-  }
-
-  /* Owner editor panel */
-  #ownerEditor {
-    margin-top: 20px;
-    padding: 15px 10px;
-  }
-}
-  </style>
+  <link rel="stylesheet" href="style_enhanced.css">
 </head>
 <body>
   <nav class="sidebar">
@@ -523,19 +23,14 @@ body {
       <form id="ownerEditForm">
         <label for="welcomeTitle">Welcome Title</label>
         <input type="text" id="welcomeTitle" name="welcomeTitle" maxlength="100" />
-
         <label for="welcomeText">Welcome Text</label>
         <textarea id="welcomeText" name="welcomeText" maxlength="1000"></textarea>
-
         <label for="rulesText">Rules Text (Use line breaks for multiple rules)</label>
         <textarea id="rulesText" name="rulesText" maxlength="2000"></textarea>
-
-        <label for="announcementsText">Announcements Text (Use line breaks for multiple announcements)</label>
+        <label for="announcementsText">Announcements Text</label>
         <textarea id="announcementsText" name="announcementsText" maxlength="1000"></textarea>
-
-        <label for="eventsText">Events Text (Use line breaks for multiple events)</label>
+        <label for="eventsText">Events Text</label>
         <textarea id="eventsText" name="eventsText" maxlength="1000"></textarea>
-
         <button type="submit">Save Changes</button>
       </form>
     </div>
@@ -546,22 +41,18 @@ body {
       <h1>Loading...</h1>
       <p></p>
     </section>
-
     <section id="rules">
       <h3>Loading...</h3>
       <div id="rulesContent"></div>
     </section>
-
     <section id="announcements">
       <h3>Loading...</h3>
       <div id="announcementsContent"></div>
     </section>
-
     <section id="events">
       <h3>Loading...</h3>
       <div id="eventsContent"></div>
     </section>
-
     <section id="chat">
       <h3>Club Chat Room 💬</h3>
       <div id="chat-container">
@@ -572,17 +63,17 @@ body {
         </div>
       </div>
     </section>
-
     <a href="index.html" class="leave-btn">Leave Clubhouse 🚪</a>
   </main>
-<!-- Secret Code Prompt -->
-<div id="secretCodePrompt" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.7); z-index: 1100; display:flex; justify-content:center; align-items:center;">
-  <div style="background:#fff; padding:30px 40px; border-radius:12px; max-width:320px; text-align:center; box-shadow: 0 8px 15px rgba(0,0,0,0.3);">
-    <h2 style="margin-bottom:20px; font-family:'Roboto Slab', serif; color:#5a3e1b;">Enter Secret Code</h2>
-    <input id="secretCodeInput" type="password" placeholder="Secret Code" style="width:100%; padding:10px; font-size:1.1rem; border:2px solid #d9b48f; border-radius:8px; margin-bottom:15px;" />
-    <button id="secretCodeSubmit" style="padding:10px 25px; background:#a56c23; color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer; width:100%;">Submit</button>
+
+  <!-- Secret Code Prompt -->
+  <div id="secretCodePrompt" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.7); z-index: 1100; display:flex; justify-content:center; align-items:center;">
+    <div style="background:#fff; padding:30px 40px; border-radius:12px; max-width:320px; text-align:center; box-shadow: 0 8px 15px rgba(0,0,0,0.3);">
+      <h2 style="margin-bottom:20px; font-family:'Roboto Slab', serif; color:#5a3e1b;">Enter Secret Code</h2>
+      <input id="secretCodeInput" type="password" placeholder="Secret Code" style="width:100%; padding:10px; font-size:1.1rem; border:2px solid #d9b48f; border-radius:8px; margin-bottom:15px;" />
+      <button id="secretCodeSubmit" style="padding:10px 25px; background:#a56c23; color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer; width:100%;">Submit</button>
+    </div>
   </div>
-</div>
 
   <!-- Username prompt -->
   <div id="usernamePrompt">
@@ -594,74 +85,14 @@ body {
     </div>
   </div>
 
-  <!-- Firebase SDK (compat version) -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <script>
-    const SECRET_ACCESS_CODE = 'lmn-code-001';  // your actual secret code here
-
-// Elements for secret code prompt overlay
-const secretCodePrompt = document.getElementById('secretCodePrompt');
-const secretCodeInput = document.getElementById('secretCodeInput');
-const secretCodeSubmit = document.getElementById('secretCodeSubmit');
-
-function showSecretCodePrompt() {
-  secretCodePrompt.style.display = 'flex';
-  secretCodeInput.value = '';
-  secretCodeInput.focus();
-}
-
-function hideSecretCodePrompt() {
-  secretCodePrompt.style.display = 'none';
-}
-
-// On page load, show secret code prompt before anything else
-showSecretCodePrompt();
-
-secretCodeSubmit.onclick = () => {
-  const enteredCode = secretCodeInput.value.trim();
-  if (enteredCode === SECRET_ACCESS_CODE) {
-    hideSecretCodePrompt();
-
-    // Check if username exists
-    username = localStorage.getItem('lmUsername');
-    if (!username) {
-      showUsernamePrompt();
-    } else {
-      // username exists, set isOwnerUser and start chat directly
-      isOwnerUser = (username === OWNER_SECRET_CODE);
-      if (isOwnerUser) {
-        ownerEditor.style.display = 'block';
-      }
-      loadSiteContent();
-      startChat();
-    }
-  } else {
-    alert('Incorrect secret code, try again.');
-    secretCodeInput.value = '';
-    secretCodeInput.focus();
-  }
-};
-
-
-secretCodeInput.addEventListener('keyup', e => {
-  if (e.key === 'Enter') {
-    secretCodeSubmit.onclick();
-  }
-});
-
+    const SECRET_ACCESS_CODE = 'lmn-code-001';
     const OWNER_SECRET_CODE = 'rA1nB0w$OwN3r!X9VzqLpT7wF2KdJmHgYs8';
-    const bannedWords = ['motherfucker', 'bitch', 'pussy', 'damn', 'hell', 'shit', 'fuck','cunt'];
-
-    function cleanText(text) {
-      let clean = text;
-      bannedWords.forEach(word => {
-        const regex = new RegExp('\\b' + word + '\\b', 'gi');
-        clean = clean.replace(regex, '***');
-      });
-      return clean;
-    }
+    const bannedWords = ['motherfucker','bitch','pussy','damn','hell','shit','fuck','cunt'];
 
     const firebaseConfig = {
       apiKey: "AIzaSyCnhg3NUeTPE6A1XbmpzXzcJ7O1whhrgHY",
@@ -679,18 +110,15 @@ secretCodeInput.addEventListener('keyup', e => {
     const messagesRef = db.ref('clubhouseChat');
     const siteContentRef = db.ref('siteContent');
 
-    // DOM Elements for chat
     const messagesList = document.getElementById('messages');
     const msgInput = document.getElementById('msgInput');
     const sendBtn = document.getElementById('sendBtn');
 
-    // DOM Elements for username prompt
     const usernamePrompt = document.getElementById('usernamePrompt');
     const usernameInput = document.getElementById('usernameInput');
     const usernameSubmit = document.getElementById('usernameSubmit');
     const changeUsernameBtn = document.getElementById('changeUsernameBtn');
 
-    // Owner editor panel elements
     const ownerEditor = document.getElementById('ownerEditor');
     const ownerEditForm = document.getElementById('ownerEditForm');
     const welcomeTitleInput = document.getElementById('welcomeTitle');
@@ -699,7 +127,6 @@ secretCodeInput.addEventListener('keyup', e => {
     const announcementsTextInput = document.getElementById('announcementsText');
     const eventsTextInput = document.getElementById('eventsText');
 
-    // Content sections to update
     const welcomeSection = document.getElementById('welcome');
     const rulesSection = document.getElementById('rules');
     const announcementsSection = document.getElementById('announcements');
@@ -712,74 +139,39 @@ secretCodeInput.addEventListener('keyup', e => {
     let username = localStorage.getItem('lmUsername');
     let isOwnerUser = false;
 
-    function showUsernamePrompt() {
-      usernamePrompt.style.display = 'flex';
-      usernameInput.focus();
+    function cleanText(text) {
+      let clean = text;
+      bannedWords.forEach(word => {
+        const regex = new RegExp('\\b' + word + '\\b', 'gi');
+        clean = clean.replace(regex, '***');
+      });
+      return clean;
     }
 
-    function hideUsernamePrompt() {
-      usernamePrompt.style.display = 'none';
+    function escapeHTML(str) {
+      return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     }
+
+    function showUsernamePrompt() { usernamePrompt.style.display = 'flex'; usernameInput.focus(); }
+    function hideUsernamePrompt() { usernamePrompt.style.display = 'none'; }
 
     function isValidUsername(name) {
       if (name === OWNER_SECRET_CODE) return true;
       return /^[a-zA-Z0-9_-]{3,20}$/.test(name);
     }
 
-    // Escape text for safety
-    function escapeHTML(str) {
-      return str.replace(/[&<>"']/g, function(m) {
-        return ({
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#39;'
-        })[m];
-      });
-    }
-
-    // Load content from Firebase
     function loadSiteContent() {
       siteContentRef.once('value').then(snapshot => {
         const content = snapshot.val();
-        if (!content) {
-          // Set defaults if no content found
-          setDefaultSiteContent();
-          return;
-        }
-
-        // Welcome
+        if (!content) { setDefaultSiteContent(); return; }
         welcomeSection.querySelector('h1').textContent = content.welcome.title || 'Welcome to the Clubhouse 🏠';
-        welcomeSection.querySelector('p').textContent = content.welcome.text || 'Glad you’re here! The LittleMen secret club is the ultimate spot for collectors, fans, and those who appreciate the quirky charm of our bendy buddies. Kick back, explore, and enjoy the exclusive inside scoop.';
-
-        // Rules
+        welcomeSection.querySelector('p').textContent = content.welcome.text || '';
         rulesSection.querySelector('h3').textContent = 'Club Rules 📜';
-        if(content.rules.text){
-          rulesContentDiv.innerHTML = formatMultilineText(content.rules.text);
-        } else {
-          rulesContentDiv.innerHTML = formatMultilineText(
-            `1, You do not talk about LittleMen Secret Club.\n2. Respect the vibe, positivity only.\n3. Keep drops and codes confidential.\n4. Share tips and tricks, but no spoilers for new releases.\n5. Stay active or risk being benched!`
-          );
-        }
-
-        // Announcements
+        rulesContentDiv.innerHTML = content.rules.text ? formatMultilineText(content.rules.text) : '';
         announcementsSection.querySelector('h3').textContent = 'Announcements 📢';
-        if(content.announcements.text){
-          announcementsContentDiv.innerHTML = formatMultilineText(content.announcements.text);
-        } else {
-          announcementsContentDiv.innerHTML = '• 13 AllGold LittleRobots left!';
-        }
-
-        // Events
+        announcementsContentDiv.innerHTML = content.announcements.text || '';
         eventsSection.querySelector('h3').textContent = 'Upcoming Events 📅';
-        if(content.events.text){
-          eventsContentDiv.innerHTML = formatMultilineText(content.events.text);
-        } else {
-          eventsContentDiv.innerHTML = '🏁 July 31: Collab upcoming';
-        }
-
-        // If owner, fill editor inputs with loaded content
+        eventsContentDiv.innerHTML = content.events.text || '';
         if(isOwnerUser){
           welcomeTitleInput.value = content.welcome.title || '';
           welcomeTextInput.value = content.welcome.text || '';
@@ -792,92 +184,34 @@ secretCodeInput.addEventListener('keyup', e => {
 
     function setDefaultSiteContent() {
       welcomeSection.querySelector('h1').textContent = 'Welcome to the Clubhouse 🏠';
-      welcomeSection.querySelector('p').textContent = 'Glad you’re here! The LittleMen secret club is the ultimate spot for collectors, fans, and those who appreciate the quirky charm of our bendy buddies. Kick back, explore, and enjoy the exclusive inside scoop.';
-
+      welcomeSection.querySelector('p').textContent = 'Glad you’re here!';
       rulesSection.querySelector('h3').textContent = 'Club Rules 📜';
-      rulesContentDiv.innerHTML = formatMultilineText(
-        `1, You do not talk about LittleMen Secret Club.\n2. Respect the vibe, positivity only.\n3. Keep drops and codes confidential.\n4. Share tips and tricks, but no spoilers for new releases.\n5. Stay active or risk being benched!`
-      );
-
+      rulesContentDiv.innerHTML = '<p>Rule 1</p>';
       announcementsSection.querySelector('h3').textContent = 'Announcements 📢';
-      announcementsContentDiv.innerHTML = '• 13 AllGold LittleRobots left!';
-
+      announcementsContentDiv.innerHTML = '';
       eventsSection.querySelector('h3').textContent = 'Upcoming Events 📅';
-      eventsContentDiv.innerHTML = '🏁 July 31: Collab upcoming';
+      eventsContentDiv.innerHTML = '';
     }
 
-    // Convert multiline text into separate paragraphs or bullet points
     function formatMultilineText(text) {
-      // Split by newline
-      const lines = text.split('\n').filter(Boolean);
-      return lines.map(line => `<p>${escapeHTML(line)}</p>`).join('');
+      return text.split('\\n').filter(Boolean).map(line => `<p>${escapeHTML(line)}</p>`).join('');
     }
-
-    // Chat and username handling
-
-    if (!username) {
-      showUsernamePrompt();
-    } else {
-      isOwnerUser = (username === OWNER_SECRET_CODE);
-      if(isOwnerUser){
-        ownerEditor.style.display = 'block';
-      }
-      loadSiteContent();
-      startChat();
-    }
-
-   usernameSubmit.onclick = () => {
-  const name = usernameInput.value.trim();
-  if (!isValidUsername(name)) {
-    alert('Username must be 3-20 characters, letters, numbers, underscores or dashes only.');
-    return;
-  }
-  username = name;
-  localStorage.setItem('lmUsername', username);
-  isOwnerUser = (username === OWNER_SECRET_CODE);
-  if(isOwnerUser){
-    ownerEditor.style.display = 'block';
-  }
-  hideUsernamePrompt();
-
-  // Remove focus to prevent zoom on mobile
-  usernameInput.blur();
-
-  loadSiteContent();
-  startChat();
-};
-
-    usernameInput.addEventListener('keyup', e => {
-  if (e.key === 'Enter') {
-    usernameSubmit.onclick();
-    usernameInput.blur(); // blur after enter
-  }
-});
-
-
-    changeUsernameBtn.addEventListener('click', () => {
-      usernameInput.value = '';
-      showUsernamePrompt();
-    });
 
     function startChat() {
       messagesRef.limitToLast(50).off();
       messagesList.innerHTML = '';
-
       messagesRef.limitToLast(50).on('child_added', snapshot => {
         const msg = snapshot.val();
         const li = document.createElement('li');
-
         if (msg.user === OWNER_SECRET_CODE) {
+          li.classList.add('owner-msg');
           li.innerHTML = `<strong class="owner-username">Owner</strong>: ${escapeHTML(msg.text)}`;
         } else {
           li.innerHTML = `<strong>${escapeHTML(msg.user)}</strong>: ${escapeHTML(msg.text)}`;
         }
-
         messagesList.appendChild(li);
-        messagesList.scrollTop = messagesList.scrollHeight;
+        messagesList.scrollTo({ top: messagesList.scrollHeight, behavior: 'smooth' });
       });
-
       sendBtn.onclick = () => {
         let text = msgInput.value.trim();
         if (!text) return;
@@ -885,62 +219,67 @@ secretCodeInput.addEventListener('keyup', e => {
         messagesRef.push({ user: username, text });
         msgInput.value = '';
       };
-
-      msgInput.addEventListener('keyup', e => {
-        if (e.key === 'Enter') sendBtn.onclick();
-      });
+      msgInput.addEventListener('keyup', e => { if (e.key === 'Enter') sendBtn.onclick(); });
     }
 
-    // Owner form submission to save changes
+    usernameSubmit.onclick = () => {
+      const name = usernameInput.value.trim();
+      if (!isValidUsername(name)) { alert('Invalid username.'); return; }
+      username = name;
+      localStorage.setItem('lmUsername', username);
+      isOwnerUser = (username === OWNER_SECRET_CODE);
+      if (isOwnerUser) ownerEditor.style.display = 'block';
+      hideUsernamePrompt();
+      loadSiteContent();
+      startChat();
+    };
+
+    changeUsernameBtn.onclick = () => { usernameInput.value = ''; showUsernamePrompt(); };
+
+    // Secret code handling
+    const secretCodePrompt = document.getElementById('secretCodePrompt');
+    const secretCodeInput = document.getElementById('secretCodeInput');
+    const secretCodeSubmit = document.getElementById('secretCodeSubmit');
+    function showSecretCodePrompt() { secretCodePrompt.style.display = 'flex'; secretCodeInput.value = ''; secretCodeInput.focus(); }
+    function hideSecretCodePrompt() { secretCodePrompt.style.display = 'none'; }
+    secretCodeSubmit.onclick = () => {
+      if (secretCodeInput.value.trim() === SECRET_ACCESS_CODE) {
+        hideSecretCodePrompt();
+        if (!username) showUsernamePrompt();
+        else { isOwnerUser = (username === OWNER_SECRET_CODE); if (isOwnerUser) ownerEditor.style.display = 'block'; loadSiteContent(); startChat(); }
+      } else {
+        alert('Incorrect secret code, try again.');
+        secretCodeInput.value = '';
+        secretCodeInput.focus();
+      }
+    };
+    secretCodeInput.addEventListener('keyup', e => { if (e.key === 'Enter') secretCodeSubmit.onclick(); });
+    showSecretCodePrompt();
+
+    // Owner editor save
     ownerEditForm.addEventListener('submit', e => {
       e.preventDefault();
-
-      if (!isOwnerUser) {
-        alert('You are not authorized to make changes.');
-        return;
-      }
-
-      // Clean inputs before saving
+      if (!isOwnerUser) { alert('Not authorized'); return; }
       const newContent = {
-        welcome: {
-          title: welcomeTitleInput.value.trim(),
-          text: welcomeTextInput.value.trim()
-        },
-        rules: {
-          text: rulesTextInput.value.trim()
-        },
-        announcements: {
-          text: announcementsTextInput.value.trim()
-        },
-        events: {
-          text: eventsTextInput.value.trim()
-        }
+        welcome: { title: welcomeTitleInput.value.trim(), text: welcomeTextInput.value.trim() },
+        rules: { text: rulesTextInput.value.trim() },
+        announcements: { text: announcementsTextInput.value.trim() },
+        events: { text: eventsTextInput.value.trim() }
       };
-
-      // Save to Firebase
-      siteContentRef.set(newContent)
-        .then(() => {
-          alert('Site content updated successfully!');
-          loadSiteContent(); // Reload content so UI updates immediately
-        })
-        .catch(err => {
-          alert('Failed to update content: ' + err.message);
-        });
+      siteContentRef.set(newContent).then(() => {
+        alert('Updated successfully!');
+        loadSiteContent();
+      });
     });
 
-    // Tab switching logic (unchanged)
-    const tabButtons = document.querySelectorAll('nav.sidebar button');
-    const tabSections = document.querySelectorAll('main.content section');
-
-    tabButtons.forEach(btn => {
+    // Tabs
+    document.querySelectorAll('nav.sidebar button').forEach(btn => {
       btn.addEventListener('click', () => {
-        tabButtons.forEach(b => b.classList.remove('active'));
-        tabSections.forEach(s => s.classList.remove('active'));
-
+        document.querySelectorAll('nav.sidebar button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('main.content section').forEach(s => s.classList.remove('active'));
         btn.classList.add('active');
         const tabId = btn.getAttribute('data-tab');
-        const section = document.getElementById(tabId);
-        if(section) section.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
       });
     });
   </script>
