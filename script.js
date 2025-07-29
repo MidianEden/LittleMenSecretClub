@@ -1,9 +1,7 @@
-/* ==== CONFIG ==== */
 const SECRET_ACCESS_CODE = 'lmn-code-001';
 const OWNER_SECRET_CODE = 'rA1nB0w$OwN3r!X9VzqLpT7wF2KdJmHgYs8';
 const bannedWords = ['motherfucker','bitch','pussy','damn','hell','shit','fuck','cunt'];
 
-/* ==== FIREBASE ==== */
 const firebaseConfig = {
   apiKey: "AIzaSyCnhg3NUeTPE6A1XbmpzXzcJ7O1whhrgHY",
   authDomain: "littlemen-174cf.firebaseapp.com",
@@ -19,7 +17,6 @@ const db = firebase.database();
 const messagesRef = db.ref('clubhouseChat');
 const siteContentRef = db.ref('siteContent');
 
-/* ==== ELEMENTS ==== */
 const entryScreen = document.getElementById('entryScreen');
 const secretCodeInput = document.getElementById('secretCodeInput');
 const secretCodeSubmit = document.getElementById('secretCodeSubmit');
@@ -31,18 +28,9 @@ const ownerEditor = document.getElementById('ownerEditor');
 const changeUsernameBtn = document.getElementById('changeUsernameBtn');
 const triviaBtn = document.getElementById('clubTriviaBtn');
 
-/* ==== OWNER FORM FIELDS ==== */
-const welcomeTitleInput = document.getElementById('welcomeTitle');
-const welcomeTextInput = document.getElementById('welcomeText');
-const rulesTextInput = document.getElementById('rulesText');
-const announcementsTextInput = document.getElementById('announcementsText');
-const eventsTextInput = document.getElementById('eventsText');
-
-/* ==== STATE ==== */
 let username = localStorage.getItem('lmUsername');
 let isOwnerUser = false;
 
-/* ==== HELPERS ==== */
 function cleanText(text) {
   let clean = text;
   bannedWords.forEach(word => {
@@ -61,7 +49,6 @@ function showOwnerPanel(show) {
   ownerEditor.style.display = show ? 'block' : 'none';
 }
 
-/* ==== LOAD SITE CONTENT ==== */
 function loadSiteContent() {
   siteContentRef.once('value').then(snapshot => {
     const content = snapshot.val();
@@ -73,16 +60,15 @@ function loadSiteContent() {
     document.querySelector('#eventsContent').innerHTML = content.events.text || '';
 
     if (isOwnerUser) {
-      welcomeTitleInput.value = content.welcome.title || '';
-      welcomeTextInput.value = content.welcome.text || '';
-      rulesTextInput.value = content.rules.text || '';
-      announcementsTextInput.value = content.announcements.text || '';
-      eventsTextInput.value = content.events.text || '';
+      document.getElementById('welcomeTitle').value = content.welcome.title || '';
+      document.getElementById('welcomeText').value = content.welcome.text || '';
+      document.getElementById('rulesText').value = content.rules.text || '';
+      document.getElementById('announcementsText').value = content.announcements.text || '';
+      document.getElementById('eventsText').value = content.events.text || '';
     }
   });
 }
 
-/* ==== CHAT ==== */
 function startChat() {
   const messagesList = document.getElementById('messages');
   const msgInput = document.getElementById('msgInput');
@@ -120,7 +106,6 @@ function startChat() {
   });
 }
 
-/* ==== CHAT COMMANDS ==== */
 function handleCommand(cmd) {
   if (cmd === '/roll') return `${username} rolled a ${Math.floor(Math.random() * 6) + 1}! 🎲`;
   if (cmd === '/joke') return "Why don’t ragdolls fight? They don’t have the guts. 🤭";
@@ -128,8 +113,6 @@ function handleCommand(cmd) {
   return "Unknown command.";
 }
 
-/* ==== EVENT LISTENERS ==== */
-// Door code
 secretCodeSubmit.onclick = () => {
   if (secretCodeInput.value.trim() === SECRET_ACCESS_CODE) {
     entryScreen.classList.add('hidden');
@@ -147,7 +130,6 @@ secretCodeSubmit.onclick = () => {
   }
 };
 
-// Username submit
 usernameSubmit.onclick = () => {
   const name = usernameInput.value.trim();
   if (!/^[a-zA-Z0-9_-]{3,20}$/.test(name) && name !== OWNER_SECRET_CODE) {
@@ -164,12 +146,10 @@ usernameSubmit.onclick = () => {
   startChat();
 };
 
-// Change username
 changeUsernameBtn.onclick = () => {
   usernamePrompt.classList.remove('hidden');
 };
 
-// Trivia button
 triviaBtn.onclick = () => {
   const facts = [
     "LittleMen was founded in 2025.",
@@ -180,15 +160,14 @@ triviaBtn.onclick = () => {
   alert(facts[Math.floor(Math.random() * facts.length)]);
 };
 
-// Owner save
 document.getElementById('ownerEditForm').addEventListener('submit', e => {
   e.preventDefault();
   if (!isOwnerUser) return alert("Not authorized!");
   const newContent = {
-    welcome: { title: welcomeTitleInput.value.trim(), text: welcomeTextInput.value.trim() },
-    rules: { text: rulesTextInput.value.trim() },
-    announcements: { text: announcementsTextInput.value.trim() },
-    events: { text: eventsTextInput.value.trim() }
+    welcome: { title: document.getElementById('welcomeTitle').value.trim(), text: document.getElementById('welcomeText').value.trim() },
+    rules: { text: document.getElementById('rulesText').value.trim() },
+    announcements: { text: document.getElementById('announcementsText').value.trim() },
+    events: { text: document.getElementById('eventsText').value.trim() }
   };
   siteContentRef.set(newContent).then(() => {
     alert("Content updated!");
@@ -196,7 +175,6 @@ document.getElementById('ownerEditForm').addEventListener('submit', e => {
   });
 });
 
-// Tab navigation
 document.querySelectorAll('.sidebar button[data-tab]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.sidebar button').forEach(b => b.classList.remove('active'));
@@ -206,7 +184,6 @@ document.querySelectorAll('.sidebar button[data-tab]').forEach(btn => {
   });
 });
 
-/* ==== INITIAL PAGE LOAD ==== */
 window.addEventListener('DOMContentLoaded', () => {
   clubhouse.classList.add('hidden');
   usernamePrompt.classList.add('hidden');
