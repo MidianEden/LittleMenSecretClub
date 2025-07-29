@@ -1,6 +1,6 @@
 /* ==== CONFIG ==== */
 const SECRET_ACCESS_CODE = 'lmn-code-001';
-const OWNER_SECRET_CODE = 'rA1nB0w$OwN3r!X9VzqLpT7wF2KdJmHgYs8';
+const OWNER_SECRET_CODE = 'rA1nB0w$OwN3r!X9VzqLpT7wF2KdJmHgYs8a';
 const bannedWords = ['motherfucker','bitch','pussy','damn','hell','shit','fuck','cunt'];
 
 /* ==== FIREBASE ==== */
