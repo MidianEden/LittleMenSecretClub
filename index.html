@@ -2,82 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>LittleMen Clubhouse Chat</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Slab&display=swap" rel="stylesheet" />
+  <title>LittleMen Clubhouse</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav class="sidebar">
-    <h2>LittleMen Club</h2>
-    <button data-tab="welcome" class="active">Welcome</button>
-    <button data-tab="rules">Rules</button>
-    <button data-tab="announcements">Announcements</button>
-    <button data-tab="events">Events</button>
-    <button data-tab="chat">Chat</button>
-    <a href="index.html" class="logout">Logout</a>
-    <button id="changeUsernameBtn">Change Username</button>
 
-    <!-- Owner Editor Panel - hidden by default -->
-    <div id="ownerEditor" style="display:none;">
-      <h3>Owner Editor Panel</h3>
-      <form id="ownerEditForm">
-        <label>Welcome Title</label>
-        <input type="text" id="welcomeTitle" maxlength="100" />
-        <label>Welcome Text</label>
-        <textarea id="welcomeText" maxlength="1000"></textarea>
-        <label>Rules Text</label>
-        <textarea id="rulesText" maxlength="2000"></textarea>
-        <label>Announcements Text</label>
-        <textarea id="announcementsText" maxlength="1000"></textarea>
-        <label>Events Text</label>
-        <textarea id="eventsText" maxlength="1000"></textarea>
-        <button type="submit">Save Changes</button>
-      </form>
-    </div>
-  </nav>
-
-  <main class="content">
-    <section id="welcome" class="active">
-      <h1>Loading...</h1>
-      <p></p>
-    </section>
-    <section id="rules">
-      <h3>Loading...</h3>
-      <div id="rulesContent"></div>
-    </section>
-    <section id="announcements">
-      <h3>Loading...</h3>
-      <div id="announcementsContent"></div>
-    </section>
-    <section id="events">
-      <h3>Loading...</h3>
-      <div id="eventsContent"></div>
-    </section>
-    <section id="chat">
-      <h3>Club Chat Room 💬</h3>
-      <div id="chat-container">
-        <ul id="messages"></ul>
-        <div id="chat-input-area">
-          <input id="msgInput" type="text" placeholder="Say something..." autocomplete="off" />
-          <button id="sendBtn">Send</button>
-        </div>
-      </div>
-    </section>
-    <a href="index.html" class="leave-btn">Leave Clubhouse 🚪</a>
-  </main>
-
-  <!-- Secret Code Prompt -->
-  <div id="secretCodePrompt">
-    <div id="codePromptContent">
-      <h2>Enter Secret Code</h2>
-      <input id="secretCodeInput" type="password" placeholder="Secret Code" />
-      <button id="secretCodeSubmit">Submit</button>
+  <!-- Secret Entry Door -->
+  <div id="entryScreen" class="entry-screen">
+    <div class="door">
+      <h1>Welcome to the LittleMen Cabin</h1>
+      <input type="password" id="secretCodeInput" placeholder="Enter Secret Code">
+      <button id="secretCodeSubmit">Enter</button>
     </div>
   </div>
 
+  <!-- Main Layout -->
+  <div id="clubhouse" class="hidden">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <h2 class="club-sign">LittleMen Clubhouse</h2>
+      <button data-tab="welcome" class="active">Welcome</button>
+      <button data-tab="rules">Rules</button>
+      <button data-tab="announcements">Announcements</button>
+      <button data-tab="events">Events</button>
+      <button data-tab="chat">Chat</button>
+      <button id="clubTriviaBtn">Club Trivia</button>
+      <a href="index.html" class="logout">Logout</a>
+      <button id="changeUsernameBtn">Change Username</button>
+
+      <!-- Owner Editor Panel -->
+      <div id="ownerEditor" style="display:none;">
+        <h3>Owner Bulletin Board</h3>
+        <form id="ownerEditForm">
+          <label>Welcome Title</label>
+          <input type="text" id="welcomeTitle" maxlength="100" />
+          <label>Welcome Text</label>
+          <textarea id="welcomeText" maxlength="1000"></textarea>
+          <label>Rules Text</label>
+          <textarea id="rulesText" maxlength="2000"></textarea>
+          <label>Announcements Text</label>
+          <textarea id="announcementsText" maxlength="1000"></textarea>
+          <label>Events Text</label>
+          <textarea id="eventsText" maxlength="1000"></textarea>
+          <button type="submit">Save Changes</button>
+        </form>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content">
+      <section id="welcome" class="active">
+        <h1>Loading...</h1>
+        <p></p>
+      </section>
+
+      <section id="rules">
+        <h3>Loading...</h3>
+        <div id="rulesContent"></div>
+      </section>
+
+      <section id="announcements">
+        <h3>Loading...</h3>
+        <div id="announcementsContent"></div>
+      </section>
+
+      <section id="events">
+        <h3>Loading...</h3>
+        <div id="eventsContent"></div>
+      </section>
+
+      <section id="chat">
+        <h3>Club Chat 💬</h3>
+        <div id="chat-container">
+          <ul id="messages"></ul>
+          <div id="chat-input-area">
+            <input id="msgInput" type="text" placeholder="Say something..." autocomplete="off" />
+            <button id="sendBtn">Send</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
   <!-- Username Prompt -->
-  <div id="usernamePrompt">
-    <div id="usernamePromptContent">
+  <div id="usernamePrompt" class="overlay hidden">
+    <div class="prompt-box">
       <h2>Enter your username</h2>
       <input type="text" id="usernameInput" maxlength="40" placeholder="Your nickname" />
       <button id="usernameSubmit">Join Chat</button>
@@ -87,213 +97,7 @@
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="script.js"></script>
 
-  <script>
-    const SECRET_ACCESS_CODE = 'lmn-code-001';
-    const OWNER_SECRET_CODE = 'rA1nB0w$OwN3r!X9VzqLpT7wF2KdJmHgYs8';
-    const bannedWords = ['motherfucker','bitch','pussy','damn','hell','shit','fuck','cunt'];
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCnhg3NUeTPE6A1XbmpzXzcJ7O1whhrgHY",
-      authDomain: "littlemen-174cf.firebaseapp.com",
-      databaseURL: "https://littlemen-174cf-default-rtdb.firebaseio.com",
-      projectId: "littlemen-174cf",
-      storageBucket: "littlemen-174cf.firebasestorage.app",
-      messagingSenderId: "386734084157",
-      appId: "1:386734084157:web:e3d9a69deab7c767641a54",
-      measurementId: "G-V7ZNQBEJ2P"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const messagesRef = db.ref('clubhouseChat');
-    const siteContentRef = db.ref('siteContent');
-
-    const ownerEditor = document.getElementById('ownerEditor');
-    const welcomeTitleInput = document.getElementById('welcomeTitle');
-    const welcomeTextInput = document.getElementById('welcomeText');
-    const rulesTextInput = document.getElementById('rulesText');
-    const announcementsTextInput = document.getElementById('announcementsText');
-    const eventsTextInput = document.getElementById('eventsText');
-
-    const welcomeSection = document.getElementById('welcome');
-    const rulesSection = document.getElementById('rules');
-    const announcementsSection = document.getElementById('announcements');
-    const eventsSection = document.getElementById('events');
-    const rulesContentDiv = document.getElementById('rulesContent');
-    const announcementsContentDiv = document.getElementById('announcementsContent');
-    const eventsContentDiv = document.getElementById('eventsContent');
-
-    let username = localStorage.getItem('lmUsername');
-    let isOwnerUser = false;
-
-    function cleanText(text) {
-      let clean = text;
-      bannedWords.forEach(word => {
-        const regex = new RegExp('\\b' + word + '\\b', 'gi');
-        clean = clean.replace(regex, '***');
-      });
-      return clean;
-    }
-
-    function escapeHTML(str) {
-      return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-    }
-
-    function showUsernamePrompt() {
-      document.getElementById('usernamePrompt').style.display = 'flex';
-      document.getElementById('usernameInput').focus();
-    }
-
-    function hideUsernamePrompt() {
-      document.getElementById('usernamePrompt').style.display = 'none';
-    }
-
-    function isValidUsername(name) {
-      if (name === OWNER_SECRET_CODE) return true;
-      return /^[a-zA-Z0-9_-]{3,20}$/.test(name);
-    }
-
-    function loadSiteContent() {
-      siteContentRef.once('value').then(snapshot => {
-        const content = snapshot.val();
-        if (!content) { setDefaultSiteContent(); return; }
-        welcomeSection.querySelector('h1').textContent = content.welcome.title || 'Welcome to the Clubhouse 🏠';
-        welcomeSection.querySelector('p').textContent = content.welcome.text || '';
-        rulesSection.querySelector('h3').textContent = 'Club Rules 📜';
-        rulesContentDiv.innerHTML = content.rules.text ? formatMultilineText(content.rules.text) : '';
-        announcementsSection.querySelector('h3').textContent = 'Announcements 📢';
-        announcementsContentDiv.innerHTML = content.announcements.text || '';
-        eventsSection.querySelector('h3').textContent = 'Upcoming Events 📅';
-        eventsContentDiv.innerHTML = content.events.text || '';
-        if (isOwnerUser) {
-          welcomeTitleInput.value = content.welcome.title || '';
-          welcomeTextInput.value = content.welcome.text || '';
-          rulesTextInput.value = content.rules.text || '';
-          announcementsTextInput.value = content.announcements.text || '';
-          eventsTextInput.value = content.events.text || '';
-        }
-      });
-    }
-
-    function setDefaultSiteContent() {
-      welcomeSection.querySelector('h1').textContent = 'Welcome to the Clubhouse 🏠';
-      welcomeSection.querySelector('p').textContent = 'Glad you’re here!';
-      rulesSection.querySelector('h3').textContent = 'Club Rules 📜';
-      rulesContentDiv.innerHTML = '<p>Rule 1</p>';
-      announcementsSection.querySelector('h3').textContent = 'Announcements 📢';
-      announcementsContentDiv.innerHTML = '';
-      eventsSection.querySelector('h3').textContent = 'Upcoming Events 📅';
-      eventsContentDiv.innerHTML = '';
-    }
-
-    function formatMultilineText(text) {
-      return text.split('\n').filter(Boolean).map(line => `<p>${escapeHTML(line)}</p>`).join('');
-    }
-
-    function startChat() {
-      messagesRef.limitToLast(50).off();
-      document.getElementById('messages').innerHTML = '';
-      messagesRef.limitToLast(50).on('child_added', snapshot => {
-        const msg = snapshot.val();
-        const li = document.createElement('li');
-        if (msg.user === OWNER_SECRET_CODE) {
-          li.classList.add('owner-msg');
-          li.innerHTML = `<strong class="owner-username">Owner</strong>: ${escapeHTML(msg.text)}`;
-        } else {
-          li.innerHTML = `<strong>${escapeHTML(msg.user)}</strong>: ${escapeHTML(msg.text)}`;
-        }
-        document.getElementById('messages').appendChild(li);
-        document.getElementById('messages').scrollTo({ top: document.getElementById('messages').scrollHeight, behavior: 'smooth' });
-      });
-      document.getElementById('sendBtn').onclick = () => {
-        let text = document.getElementById('msgInput').value.trim();
-        if (!text) return;
-        text = cleanText(text);
-        messagesRef.push({ user: username, text });
-        document.getElementById('msgInput').value = '';
-      };
-    }
-
-    // Username submit
-    document.getElementById('usernameSubmit').onclick = () => {
-      const name = document.getElementById('usernameInput').value.trim();
-      if (!isValidUsername(name)) {
-        alert('Invalid username.');
-        return;
-      }
-      username = name;
-      localStorage.setItem('lmUsername', username);
-      isOwnerUser = (username === OWNER_SECRET_CODE);
-      ownerEditor.style.display = isOwnerUser ? 'block' : 'none';
-      hideUsernamePrompt();
-      loadSiteContent();
-      startChat();
-    };
-
-    // Change username
-    document.getElementById('changeUsernameBtn').onclick = () => {
-      document.getElementById('usernameInput').value = '';
-      showUsernamePrompt();
-    };
-
-    // Secret code prompt
-    const secretCodePrompt = document.getElementById('secretCodePrompt');
-    document.getElementById('secretCodeSubmit').onclick = () => {
-      if (document.getElementById('secretCodeInput').value.trim() === SECRET_ACCESS_CODE) {
-        secretCodePrompt.style.display = 'none';
-        if (!username) {
-          showUsernamePrompt();
-        } else {
-          isOwnerUser = (username === OWNER_SECRET_CODE);
-          ownerEditor.style.display = isOwnerUser ? 'block' : 'none';
-          loadSiteContent();
-          startChat();
-        }
-      } else {
-        alert('Incorrect secret code, try again.');
-      }
-    };
-
-    // Show secret code on page load
-    secretCodePrompt.style.display = 'flex';
-
-    // Owner edit form save
-    document.getElementById('ownerEditForm').addEventListener('submit', e => {
-      e.preventDefault();
-      if (!isOwnerUser) {
-        alert('Not authorized');
-        return;
-      }
-      const newContent = {
-        welcome: { title: welcomeTitleInput.value.trim(), text: welcomeTextInput.value.trim() },
-        rules: { text: rulesTextInput.value.trim() },
-        announcements: { text: announcementsTextInput.value.trim() },
-        events: { text: eventsTextInput.value.trim() }
-      };
-      siteContentRef.set(newContent).then(() => {
-        alert('Updated successfully!');
-        loadSiteContent();
-      });
-    });
-
-    // Tab navigation
-    document.querySelectorAll('nav.sidebar button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('nav.sidebar button').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('main.content section').forEach(s => s.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
-      });
-    });
-
-    // If returning visitor
-    if (username) {
-      isOwnerUser = (username === OWNER_SECRET_CODE);
-      ownerEditor.style.display = isOwnerUser ? 'block' : 'none';
-      loadSiteContent();
-      startChat();
-    }
-  </script>
 </body>
 </html>
