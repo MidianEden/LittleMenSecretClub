@@ -183,9 +183,9 @@ logoutBtn.addEventListener('click', (e) => {
 triviaBtn.onclick = () => {
   const facts = [
     "LittleMen was founded in 2025.",
-    "Each ragdoll takes 4 hours to 3D print.",
-    "The cabin has 3 hidden Easter eggs.",
-    "The owner once 3D printed a life-sized ragdoll!"
+    "Each ragdoll takes 4-8 hours to 3D print.",
+    "We have 800 followers on TikTok!",
+    "We have made 100 sales!"
   ];
   alert(facts[Math.floor(Math.random() * facts.length)]);
 };
