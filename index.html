@@ -17,20 +17,19 @@
     <a href="index.html" class="logout">Logout</a>
     <button id="changeUsernameBtn">Change Username</button>
 
-    <!-- Owner editing panel -->
     <div id="ownerEditor">
       <h3>Owner Editor Panel</h3>
       <form id="ownerEditForm">
-        <label for="welcomeTitle">Welcome Title</label>
-        <input type="text" id="welcomeTitle" name="welcomeTitle" maxlength="100" />
-        <label for="welcomeText">Welcome Text</label>
-        <textarea id="welcomeText" name="welcomeText" maxlength="1000"></textarea>
-        <label for="rulesText">Rules Text (Use line breaks for multiple rules)</label>
-        <textarea id="rulesText" name="rulesText" maxlength="2000"></textarea>
-        <label for="announcementsText">Announcements Text</label>
-        <textarea id="announcementsText" name="announcementsText" maxlength="1000"></textarea>
-        <label for="eventsText">Events Text</label>
-        <textarea id="eventsText" name="eventsText" maxlength="1000"></textarea>
+        <label>Welcome Title</label>
+        <input type="text" id="welcomeTitle" maxlength="100" />
+        <label>Welcome Text</label>
+        <textarea id="welcomeText" maxlength="1000"></textarea>
+        <label>Rules Text</label>
+        <textarea id="rulesText" maxlength="2000"></textarea>
+        <label>Announcements Text</label>
+        <textarea id="announcementsText" maxlength="1000"></textarea>
+        <label>Events Text</label>
+        <textarea id="eventsText" maxlength="1000"></textarea>
         <button type="submit">Save Changes</button>
       </form>
     </div>
@@ -66,26 +65,22 @@
     <a href="index.html" class="leave-btn">Leave Clubhouse 🚪</a>
   </main>
 
-  <!-- Secret Code Prompt -->
-  <div id="secretCodePrompt" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.7); z-index: 1100; display:flex; justify-content:center; align-items:center;">
-    <div style="background:#fff; padding:30px 40px; border-radius:12px; max-width:320px; text-align:center; box-shadow: 0 8px 15px rgba(0,0,0,0.3);">
-      <h2 style="margin-bottom:20px; font-family:'Roboto Slab', serif; color:#5a3e1b;">Enter Secret Code</h2>
-      <input id="secretCodeInput" type="password" placeholder="Secret Code" style="width:100%; padding:10px; font-size:1.1rem; border:2px solid #d9b48f; border-radius:8px; margin-bottom:15px;" />
-      <button id="secretCodeSubmit" style="padding:10px 25px; background:#a56c23; color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer; width:100%;">Submit</button>
+  <div id="secretCodePrompt">
+    <div id="codePromptContent">
+      <h2>Enter Secret Code</h2>
+      <input id="secretCodeInput" type="password" placeholder="Secret Code" />
+      <button id="secretCodeSubmit">Submit</button>
     </div>
   </div>
 
-  <!-- Username prompt -->
   <div id="usernamePrompt">
     <div id="usernamePromptContent">
       <h2>Enter your username</h2>
-      <h4>If you are on mobile zoom out after pressing enter </h4>
       <input type="text" id="usernameInput" maxlength="40" placeholder="Your nickname" />
       <button id="usernameSubmit">Join Chat</button>
     </div>
   </div>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
@@ -154,7 +149,6 @@
 
     function showUsernamePrompt() { usernamePrompt.style.display = 'flex'; usernameInput.focus(); }
     function hideUsernamePrompt() { usernamePrompt.style.display = 'none'; }
-
     function isValidUsername(name) {
       if (name === OWNER_SECRET_CODE) return true;
       return /^[a-zA-Z0-9_-]{3,20}$/.test(name);
@@ -236,7 +230,6 @@
 
     changeUsernameBtn.onclick = () => { usernameInput.value = ''; showUsernamePrompt(); };
 
-    // Secret code handling
     const secretCodePrompt = document.getElementById('secretCodePrompt');
     const secretCodeInput = document.getElementById('secretCodeInput');
     const secretCodeSubmit = document.getElementById('secretCodeSubmit');
@@ -256,7 +249,6 @@
     secretCodeInput.addEventListener('keyup', e => { if (e.key === 'Enter') secretCodeSubmit.onclick(); });
     showSecretCodePrompt();
 
-    // Owner editor save
     ownerEditForm.addEventListener('submit', e => {
       e.preventDefault();
       if (!isOwnerUser) { alert('Not authorized'); return; }
@@ -272,14 +264,12 @@
       });
     });
 
-    // Tabs
     document.querySelectorAll('nav.sidebar button').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('nav.sidebar button').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('main.content section').forEach(s => s.classList.remove('active'));
         btn.classList.add('active');
-        const tabId = btn.getAttribute('data-tab');
-        document.getElementById(tabId).classList.add('active');
+        document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
       });
     });
   </script>
