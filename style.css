@@ -5,6 +5,14 @@
   box-sizing: border-box;
 }
 
+/* Bulletproof hidden class */
+.hidden {
+  display: none !important;
+}
+
+/* Rest of your styles... (keep everything we had before) */
+
+
 body {
   font-family: 'Montserrat', sans-serif;
   height: 100vh;
