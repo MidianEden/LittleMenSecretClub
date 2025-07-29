@@ -8,32 +8,32 @@
 </head>
 <body>
 
-  <!-- Secret Entry Door -->
+  <!-- ENTRY SCREEN -->
   <div id="entryScreen" class="entry-screen">
     <div class="door">
-      <h1>Welcome to the LittleMen Cabin</h1>
+      <h1>🔑 Welcome to the LittleMen Clubhouse</h1>
       <input type="password" id="secretCodeInput" placeholder="Enter Secret Code">
-      <button id="secretCodeSubmit">Enter</button>
+      <button id="secretCodeSubmit">Enter 🚪</button>
     </div>
   </div>
 
-  <!-- Main Layout -->
+  <!-- MAIN CLUBHOUSE -->
   <div id="clubhouse" class="hidden">
-    <!-- Sidebar -->
+    <!-- SIDEBAR -->
     <nav class="sidebar">
-      <h2 class="club-sign">LittleMen Clubhouse</h2>
+      <h2 class="club-sign">🏠 LittleMen Clubhouse</h2>
       <button data-tab="welcome" class="active">Welcome</button>
-      <button data-tab="rules">Rules</button>
-      <button data-tab="announcements">Announcements</button>
-      <button data-tab="events">Events</button>
-      <button data-tab="chat">Chat</button>
-      <button id="clubTriviaBtn">Club Trivia</button>
-      <a href="index.html" class="logout">Logout</a>
-      <button id="changeUsernameBtn">Change Username</button>
+      <button data-tab="rules">📜 Rules</button>
+      <button data-tab="announcements">📢 Announcements</button>
+      <button data-tab="events">📅 Events</button>
+      <button data-tab="chat">💬 Chat</button>
+      <button id="clubTriviaBtn">❓ Trivia</button>
+      <a href="#" class="logout">🚪 Logout</a>
+      <button id="changeUsernameBtn">✏️ Change Username</button>
 
-      <!-- Owner Editor Panel -->
+      <!-- OWNER EDITOR -->
       <div id="ownerEditor" style="display:none;">
-        <h3>Owner Bulletin Board</h3>
+        <h3>📌 Owner Bulletin Board</h3>
         <form id="ownerEditForm">
           <label>Welcome Title</label>
           <input type="text" id="welcomeTitle" maxlength="100" />
@@ -45,12 +45,12 @@
           <textarea id="announcementsText" maxlength="1000"></textarea>
           <label>Events Text</label>
           <textarea id="eventsText" maxlength="1000"></textarea>
-          <button type="submit">Save Changes</button>
+          <button type="submit">💾 Save Changes</button>
         </form>
       </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- MAIN CONTENT -->
     <main class="content">
       <section id="welcome" class="active">
         <h1>Loading...</h1>
@@ -73,7 +73,7 @@
       </section>
 
       <section id="chat">
-        <h3>Club Chat 💬</h3>
+        <h3>💬 Club Chat</h3>
         <div id="chat-container">
           <ul id="messages"></ul>
           <div id="chat-input-area">
@@ -85,7 +85,7 @@
     </main>
   </div>
 
-  <!-- Username Prompt -->
+  <!-- USERNAME PROMPT -->
   <div id="usernamePrompt" class="overlay hidden">
     <div class="prompt-box">
       <h2>Enter your username</h2>
@@ -94,7 +94,7 @@
     </div>
   </div>
 
-  <!-- Firebase SDK -->
+  <!-- FIREBASE SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <script src="script.js"></script>
