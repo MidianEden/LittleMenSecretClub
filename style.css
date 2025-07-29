@@ -1,4 +1,4 @@
-/* === Base Reset === */
+/* === RESET === */
 * {
   margin: 0;
   padding: 0;
@@ -7,18 +7,29 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
-  color: #f8e7c3;
-  background: url('https://t3.ftcdn.net/jpg/05/03/22/88/360_F_503228811_52rvm1eaIpXxVQ9TaTNV1USeU4rZDR6y.jpg') repeat;
-  background-size: cover;
   height: 100vh;
+  color: #f8e7c3;
   display: flex;
+  background: repeating-linear-gradient(
+    45deg,
+    #5c3b1e,
+    #5c3b1e 10px,
+    #6e4723 10px,
+    #6e4723 20px
+  );
 }
 
-/* === Entry Screen (Woodgrain Door) === */
-#entryScreen {
+/* === ENTRY SCREEN === */
+.entry-screen {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url('https://t3.ftcdn.net/jpg/05/03/22/88/360_F_503228811_52rvm1eaIpXxVQ9TaTNV1USeU4rZDR6y.jpg') center/cover no-repeat;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    #4a2f16,
+    #4a2f16 20px,
+    #5c3b1e 20px,
+    #5c3b1e 40px
+  );
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,41 +37,60 @@ body {
   z-index: 999;
 }
 
-#entryScreen h1 {
+.door {
+  background: linear-gradient(to bottom, #6e4723, #5c3b1e);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.4);
+  text-align: center;
+  transition: transform 1s ease-in-out;
+}
+
+.door.open {
+  transform: rotateY(90deg);
+}
+
+.entry-screen h1 {
   font-family: 'Roboto Slab', serif;
-  color: #f8e7c3;
-  text-shadow: 2px 2px 5px #000;
   margin-bottom: 20px;
 }
 
-#entryScreen input {
+.entry-screen input, .entry-screen button {
   padding: 10px;
-  border: 2px solid #cfa84a;
   border-radius: 6px;
-  font-size: 1.1rem;
+  border: none;
+  font-size: 1rem;
   margin-bottom: 10px;
 }
 
-#entryScreen button {
-  padding: 10px 20px;
-  font-weight: bold;
-  background: #cfa84a;
-  border: none;
-  border-radius: 6px;
-  color: #2e1c0f;
-  cursor: pointer;
-  transition: background 0.3s;
+.entry-screen input {
+  border: 2px solid #d4af37;
 }
-#entryScreen button:hover {
+
+.entry-screen button {
+  background: #d4af37;
+  font-weight: bold;
+  cursor: pointer;
+}
+.entry-screen button:hover {
   background: #ffdb6b;
 }
 
-.hidden { display: none; }
+/* === HIDDEN CLASS === */
+.hidden {
+  display: none;
+}
 
-/* === Sidebar === */
+/* === SIDEBAR === */
 .sidebar {
   width: 260px;
-  background: rgba(60, 40, 20, 0.9);
+  background: repeating-linear-gradient(
+    to bottom,
+    #6e4723,
+    #6e4723 50px,
+    #5c3b1e 50px,
+    #5c3b1e 100px
+  );
   border-right: 4px solid #d4af37;
   display: flex;
   flex-direction: column;
@@ -69,18 +99,17 @@ body {
 
 .club-sign {
   font-family: 'Roboto Slab', serif;
-  background: #6e4723;
+  background: #3b2616;
   padding: 12px;
   border: 3px solid #d4af37;
   border-radius: 10px;
   text-align: center;
   margin-bottom: 25px;
-  color: #f8e7c3;
 }
 
 .sidebar button,
 .sidebar a.logout {
-  background: #cfa84a;
+  background: #d4af37;
   border: none;
   color: #2e1c0f;
   font-weight: bold;
@@ -107,12 +136,14 @@ body {
   background: #d14f3f;
 }
 
-/* === Main Content === */
+/* === MAIN CONTENT === */
 .content {
   flex-grow: 1;
   padding: 30px;
   overflow-y: auto;
-  background: rgba(20, 10, 0, 0.85);
+  background: radial-gradient(circle at top left, rgba(255,223,128,0.15), transparent),
+              radial-gradient(circle at bottom right, rgba(255,223,128,0.15), transparent),
+              #2e1c0f;
 }
 
 .content section {
@@ -138,9 +169,9 @@ body {
   padding-bottom: 4px;
 }
 
-/* === Chat Room === */
+/* === CHAT ROOM === */
 #chat-container {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(to bottom, #3b2616, #2a1a0d);
   border: 2px solid #cfa84a;
   border-radius: 12px;
   padding: 12px;
@@ -159,11 +190,11 @@ body {
   margin-bottom: 10px;
   padding: 8px 12px;
   border-radius: 14px;
-  background: #3b2616;
+  background: linear-gradient(to bottom, #5c3b1e, #3b2616);
 }
 
 .owner-msg {
-  background: #5a3d1f;
+  background: linear-gradient(to bottom, #6e4723, #5a3d1f);
   border: 2px solid gold;
   box-shadow: 0 0 8px gold;
 }
@@ -189,9 +220,15 @@ body {
   cursor: pointer;
 }
 
-/* === Owner Editor Panel === */
+/* === OWNER EDITOR === */
 #ownerEditor {
-  background: rgba(255, 248, 220, 0.85);
+  background: repeating-linear-gradient(
+    45deg,
+    #f7f2e7,
+    #f7f2e7 10px,
+    #f0e8d2 10px,
+    #f0e8d2 20px
+  );
   border: 3px solid #d4af37;
   border-radius: 10px;
   padding: 10px;
@@ -225,10 +262,10 @@ body {
   margin-top: 6px;
 }
 
-/* === Username Prompt Overlay === */
+/* === USERNAME PROMPT === */
 .overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
   background: rgba(0,0,0,0.7);
   display: flex;
   justify-content: center;
@@ -259,6 +296,7 @@ body {
   cursor: pointer;
 }
 
+/* === RESPONSIVE === */
 @media (max-width: 700px) {
   body {
     flex-direction: column;
@@ -273,3 +311,4 @@ body {
     padding: 15px;
   }
 }
+
