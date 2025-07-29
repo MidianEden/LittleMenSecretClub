@@ -14,12 +14,11 @@ body {
   display: flex;
 }
 
-
-/* === Entry Screen (Wooden Door) === */
-.entry-screen {
+/* === Entry Screen (Woodgrain Door) === */
+#entryScreen {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: url('https://i.ibb.co/FH3G1hN/wooden-door-texture.jpg') center/cover no-repeat;
+  background: url('https://t3.ftcdn.net/jpg/05/03/22/88/360_F_503228811_52rvm1eaIpXxVQ9TaTNV1USeU4rZDR6y.jpg') center/cover no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,14 +26,14 @@ body {
   z-index: 999;
 }
 
-.entry-screen h1 {
+#entryScreen h1 {
   font-family: 'Roboto Slab', serif;
   color: #f8e7c3;
   text-shadow: 2px 2px 5px #000;
   margin-bottom: 20px;
 }
 
-.entry-screen input {
+#entryScreen input {
   padding: 10px;
   border: 2px solid #cfa84a;
   border-radius: 6px;
@@ -42,7 +41,7 @@ body {
   margin-bottom: 10px;
 }
 
-.entry-screen button {
+#entryScreen button {
   padding: 10px 20px;
   font-weight: bold;
   background: #cfa84a;
@@ -52,7 +51,7 @@ body {
   cursor: pointer;
   transition: background 0.3s;
 }
-.entry-screen button:hover {
+#entryScreen button:hover {
   background: #ffdb6b;
 }
 
@@ -61,8 +60,7 @@ body {
 /* === Sidebar === */
 .sidebar {
   width: 260px;
-  background: url('https://www.transparenttextures.com/patterns/wood-pattern.png') repeat;
-  background-size: 250px;
+  background: rgba(60, 40, 20, 0.9);
   border-right: 4px solid #d4af37;
   display: flex;
   flex-direction: column;
@@ -162,7 +160,6 @@ body {
   padding: 8px 12px;
   border-radius: 14px;
   background: #3b2616;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
 }
 
 .owner-msg {
@@ -192,9 +189,9 @@ body {
   cursor: pointer;
 }
 
-/* === Owner Editor Panel (Bulletin Board) === */
+/* === Owner Editor Panel === */
 #ownerEditor {
-  background: url('https://www.transparenttextures.com/patterns/paper-fibers.png') repeat;
+  background: rgba(255, 248, 220, 0.85);
   border: 3px solid #d4af37;
   border-radius: 10px;
   padding: 10px;
@@ -228,7 +225,7 @@ body {
   margin-top: 6px;
 }
 
-/* === Overlays (Username Prompt) === */
+/* === Username Prompt Overlay === */
 .overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -276,4 +273,3 @@ body {
     padding: 15px;
   }
 }
-
