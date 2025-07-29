@@ -131,7 +131,7 @@ secretCodeSubmit.onclick = () => {
     setTimeout(() => {
       entryScreen.classList.add('hidden');
       if (!username) {
-        usernamePrompt.classList.remove('hidden');
+        usernamePrompt.classList.remove('hidden'); // show ONLY now
       } else {
         isOwnerUser = (username === OWNER_SECRET_CODE);
         showOwnerPanel(isOwnerUser);
@@ -144,6 +144,7 @@ secretCodeSubmit.onclick = () => {
     alert("Wrong code! Try again.");
   }
 };
+
 
 // Username submit
 usernameSubmit.onclick = () => {
