@@ -74,3 +74,75 @@ p {
 }
 
 
+
+
+/* --- Added Enhancements for Playful Clubhouse --- */
+
+/* Background doodles for clubhouse vibe */
+body {
+  background-image: url('https://www.transparenttextures.com/patterns/skulls.png');
+  background-blend-mode: overlay;
+}
+
+/* Section fade and slide */
+main.content section {
+  animation: fadeSlide 0.5s ease;
+}
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Chat bubbles */
+#messages li {
+  position: relative;
+  padding: 10px 14px;
+  border-radius: 15px;
+  background: #fef6e4;
+}
+#messages li strong {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+#messages li.owner-msg {
+  background: #fff3c4;
+  border: 2px solid gold;
+  box-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+/* Sticky chat input */
+#chat-input-area {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  z-index: 10;
+}
+
+/* Owner rainbow glow */
+.owner-username {
+  text-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+/* Secret code animation */
+@keyframes doorOpen {
+  0% { transform: scale(0.8) rotateX(90deg); opacity: 0; }
+  100% { transform: scale(1) rotateX(0deg); opacity: 1; }
+}
+.secret-code-success {
+  animation: doorOpen 0.6s ease forwards;
+}
+
+/* Mobile improvements */
+@media (max-width: 700px) {
+  nav.sidebar button, nav.sidebar a.logout {
+    font-size: 1.2rem;
+    padding: 14px;
+  }
+  #messages li {
+    font-size: 1.1rem;
+  }
+  #sendBtn {
+    font-size: 1.2rem;
+  }
+}
