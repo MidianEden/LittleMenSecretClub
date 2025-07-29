@@ -309,14 +309,25 @@ body {
   body {
     flex-direction: column;
   }
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-  .content {
-    padding: 15px;
-  }
+/* Clubhouse layout: sidebar + main content */
+#clubhouse {
+  display: flex;
+  height: 100vh; /* make it fill the whole screen */
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  background: radial-gradient(circle at top left, rgba(255,223,128,0.15), transparent),
+              radial-gradient(circle at bottom right, rgba(255,223,128,0.15), transparent),
+              #2e1c0f;
 }
 
