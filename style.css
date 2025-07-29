@@ -5,19 +5,16 @@
   box-sizing: border-box;
 }
 
-/* Bulletproof hidden class */
+/* Hide elements forcefully when needed */
 .hidden {
   display: none !important;
 }
 
-/* Rest of your styles... (keep everything we had before) */
-
-
+/* === BODY BACKGROUND (Woodgrain stripes using CSS only) === */
 body {
   font-family: 'Montserrat', sans-serif;
   height: 100vh;
   color: #f8e7c3;
-  display: flex;
   background: repeating-linear-gradient(
     45deg,
     #5c3b1e,
@@ -84,14 +81,16 @@ body {
   background: #ffdb6b;
 }
 
-/* === HIDDEN CLASS === */
-.hidden {
-  display: none;
+/* === CLUBHOUSE LAYOUT === */
+#clubhouse {
+  display: flex;
+  height: 100vh;
 }
 
 /* === SIDEBAR === */
 .sidebar {
   width: 260px;
+  flex-shrink: 0;
   background: repeating-linear-gradient(
     to bottom,
     #6e4723,
@@ -146,7 +145,7 @@ body {
 
 /* === MAIN CONTENT === */
 .content {
-  flex-grow: 1;
+  flex: 1;
   padding: 30px;
   overflow-y: auto;
   background: radial-gradient(circle at top left, rgba(255,223,128,0.15), transparent),
@@ -154,27 +153,19 @@ body {
               #2e1c0f;
 }
 
+/* Only show active tab section */
 .content section {
   display: none;
 }
 .content section.active {
   display: block;
+  animation: fadeIn 0.4s ease-in-out;
 }
 
-.content h1, .content h3 {
-  font-family: 'Roboto Slab', serif;
-  margin-bottom: 15px;
-}
-
-.content h1 {
-  font-size: 2.4rem;
-  color: #ffdb6b;
-}
-
-.content h3 {
-  color: #ffdb6b;
-  border-bottom: 2px solid #cfa84a;
-  padding-bottom: 4px;
+/* Fade-in animation for sections */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* === CHAT ROOM === */
@@ -306,28 +297,16 @@ body {
 
 /* === RESPONSIVE === */
 @media (max-width: 700px) {
-  body {
+  #clubhouse {
     flex-direction: column;
   }
-/* Clubhouse layout: sidebar + main content */
-#clubhouse {
-  display: flex;
-  height: 100vh; /* make it fill the whole screen */
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  .content {
+    padding: 15px;
+  }
 }
-
-.sidebar {
-  width: 260px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.content {
-  flex: 1;
-  padding: 30px;
-  overflow-y: auto;
-  background: radial-gradient(circle at top left, rgba(255,223,128,0.15), transparent),
-              radial-gradient(circle at bottom right, rgba(255,223,128,0.15), transparent),
-              #2e1c0f;
-}
-
