@@ -1,103 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>LittleMen Clubhouse</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LittleMenToys</title>
+  <meta
+    name="description"
+    content="LittleMenToys is a colorful app-like collectible toy site for articulated 3D printed fidget figures, Mystery Boxes, and digital Locker unlocks."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&display=swap"
+    rel="stylesheet"
+  >
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <!-- ENTRY SCREEN -->
-  <div id="entryScreen" class="entry-screen">
-    <div class="door">
-      <h1>🔑 Welcome to the LittleMen Clubhouse</h1>
-      <input type="password" id="secretCodeInput" placeholder="Enter Secret Code">
-      <button id="secretCodeSubmit">Enter 🚪</button>
-    </div>
+  <div class="ambient" aria-hidden="true">
+    <span class="ambient-shape ambient-shape--block"></span>
+    <span class="ambient-shape ambient-shape--capsule"></span>
+    <span class="ambient-shape ambient-shape--spark"></span>
+    <span class="ambient-dot ambient-dot--blue"></span>
+    <span class="ambient-dot ambient-dot--yellow"></span>
+    <span class="ambient-dot ambient-dot--pink"></span>
   </div>
 
-  <!-- MAIN CLUBHOUSE -->
-  <div id="clubhouse" class="hidden">
-    <!-- SIDEBAR -->
-    <nav class="sidebar">
-      <h2 class="club-sign">🏠 LittleMen Clubhouse</h2>
-      <button data-tab="welcome" class="active">Welcome</button>
-      <button data-tab="rules">📜 Rules</button>
-      <button data-tab="announcements">📢 Announcements</button>
-      <button data-tab="events">📅 Events</button>
-      <button data-tab="chat">💬 Chat</button>
-      <button id="clubTriviaBtn">❓ Trivia</button>
-      <a href="#" class="logout">🚪 Logout</a>
-      <button id="changeUsernameBtn">✏️ Change Username</button>
+  <div class="app-shell">
+    <header class="top-nav">
+      <button class="brand-lockup" data-page-target="home" aria-label="LittleMenToys Home">
+        <span class="brand-lockup__badge">
+          <img src="assets/littlemen-logo.png" alt="LittleMen logo">
+        </span>
+        <span class="brand-lockup__text">
+          <strong>LittleMenToys</strong>
+          <small>Collect. Pose. Fidget. Unlock.</small>
+        </span>
+      </button>
 
-      <!-- OWNER EDITOR -->
-      <div id="ownerEditor" style="display:none;">
-        <h3>📌 Owner Bulletin Board</h3>
-        <form id="ownerEditForm">
-          <label>Welcome Title</label>
-          <input type="text" id="welcomeTitle" maxlength="100" />
-          <label>Welcome Text</label>
-          <textarea id="welcomeText" maxlength="1000"></textarea>
-          <label>Rules Text</label>
-          <textarea id="rulesText" maxlength="2000"></textarea>
-          <label>Announcements Text</label>
-          <textarea id="announcementsText" maxlength="1000"></textarea>
-          <label>Events Text</label>
-          <textarea id="eventsText" maxlength="1000"></textarea>
-          <button type="submit">💾 Save Changes</button>
-        </form>
-      </div>
-    </nav>
+      <nav class="nav-pills" aria-label="Primary">
+        <button class="nav-pill active" data-page-target="home">
+          <span class="nav-pill__icon" data-icon="home"></span>
+          <span>Home</span>
+        </button>
+        <button class="nav-pill" data-page-target="shop">
+          <span class="nav-pill__icon" data-icon="shop"></span>
+          <span>Shop</span>
+        </button>
+        <button class="nav-pill" data-page-target="collection">
+          <span class="nav-pill__icon" data-icon="collection"></span>
+          <span>Collection</span>
+        </button>
+        <button class="nav-pill" data-page-target="locker">
+          <span class="nav-pill__icon" data-icon="locker"></span>
+          <span>Locker</span>
+        </button>
+      </nav>
 
-    <!-- MAIN CONTENT -->
-    <main class="content">
-      <section id="welcome" class="active">
-        <h1>Loading...</h1>
-        <p></p>
+      <button class="nav-cta" data-page-target="locker">
+        <span class="nav-cta__icon" data-icon="code"></span>
+        <span>Open Locker</span>
+      </button>
+    </header>
+
+    <main class="pages">
+      <section class="page active" id="home" aria-labelledby="home-title">
+        <section class="panel hero-panel">
+          <div class="hero-copy">
+            <span class="chip chip--blue">Premium toy app</span>
+            <h1 id="home-title">Meet the LittleMen</h1>
+            <p class="hero-copy__text">
+              Articulated 3D printed fidget figures with huge personalities. Shop them
+              individually, unlock them in your Locker, or take a chance on the Mystery Box.
+            </p>
+            <div class="hero-actions">
+              <button class="button button--primary" data-page-target="shop">Shop LittleMen</button>
+              <button class="button button--secondary" data-page-target="locker">Open Locker</button>
+            </div>
+            <p class="hero-copy__helper">Collect. Pose. Fidget. Unlock.</p>
+          </div>
+
+          <div class="hero-visual">
+            <article class="hero-card hero-card--robot tilt-a">
+              <span class="hero-card__label">Robot</span>
+              <div class="hero-card__art" data-character-art="robot"></div>
+            </article>
+            <article class="hero-card hero-card--duck tilt-b">
+              <span class="hero-card__label">Duck</span>
+              <div class="hero-card__art" data-character-art="duck"></div>
+            </article>
+            <article class="hero-card hero-card--ninja tilt-c">
+              <span class="hero-card__label">Ninja</span>
+              <div class="hero-card__art" data-character-art="ninja"></div>
+            </article>
+            <article class="hero-card hero-card--dummy tilt-d">
+              <span class="hero-card__label">Crash Dummy</span>
+              <div class="hero-card__art" data-character-art="crash-dummy"></div>
+            </article>
+            <article class="hero-card hero-card--mystery tilt-e">
+              <span class="hero-card__label">Mystery</span>
+              <div class="hero-card__art" data-character-art="mystery-variant"></div>
+            </article>
+            <article class="hero-card hero-card--box tilt-f">
+              <span class="hero-card__label">Mystery Box</span>
+              <div class="hero-card__art hero-card__art--box" data-product-art="mystery-box"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="home-section">
+          <div class="section-head section-head--row">
+            <div>
+              <span class="chip chip--orange">Featured LittleMen</span>
+              <h2>Pick your next desk buddy.</h2>
+            </div>
+            <button class="ghost-button" data-page-target="shop">Browse all toys</button>
+          </div>
+          <div class="product-grid" id="featuredGrid"></div>
+        </section>
+
+        <section class="panel home-section">
+          <div class="section-head">
+            <span class="chip chip--mint">How it works</span>
+            <h2>Simple, physical-to-digital collecting.</h2>
+          </div>
+          <div class="how-grid" id="howGrid"></div>
+        </section>
+
+        <section class="home-section split-feature">
+          <article class="panel choice-card">
+            <span class="chip chip--blue">Shop Individual LittleMen</span>
+            <h2>Pick the exact LittleRobot you want.</h2>
+            <p>Choose your favorite articulated figure and unlock it with the included code card.</p>
+            <button class="button button--secondary" data-page-target="shop">Shop Figures</button>
+          </article>
+
+          <article class="panel choice-card choice-card--mystery">
+            <span class="chip chip--gold">Mystery Box</span>
+            <h2>Open a surprise box.</h2>
+            <p>Try for a secret variant not sold individually and reveal a hidden LittleRobot.</p>
+            <button class="button button--primary" data-page-target="shop">Explore Mystery Box</button>
+          </article>
+        </section>
+
+        <section class="home-section">
+          <div class="section-head">
+            <span class="chip chip--pink">Best picks</span>
+            <h2>Fan favorites on the shelf right now.</h2>
+          </div>
+          <div class="favorites-grid" id="favoritesGrid"></div>
+        </section>
+
+        <section class="panel cta-panel">
+          <div>
+            <span class="chip chip--yellow">Your collection starts here</span>
+            <h2>Ready to build your LittleMen collection?</h2>
+            <p>Shop figures, try the Mystery Box, and unlock every LittleRobot you bring home.</p>
+          </div>
+          <div class="cta-panel__actions">
+            <button class="button button--primary" data-page-target="shop">Shop Toys</button>
+            <button class="button button--secondary" data-page-target="locker">Open Locker</button>
+          </div>
+        </section>
       </section>
 
-      <section id="rules">
-        <h3>Rules</h3>
-        <div id="rulesContent"></div>
+      <section class="page" id="shop" aria-labelledby="shop-title">
+        <section class="panel shop-hero">
+          <div class="shop-hero__copy">
+            <div class="section-head section-head--wide">
+              <span class="chip chip--orange">Shop LittleMen</span>
+              <h1 id="shop-title">Shop LittleMen</h1>
+              <p>Collect articulated 3D printed fidget figures made for posing, collecting, and stress relief.</p>
+            </div>
+            <div class="shop-hero__badges">
+              <span class="mini-pill mini-pill--blue">3D Printed</span>
+              <span class="mini-pill mini-pill--mint">Articulated</span>
+              <span class="mini-pill mini-pill--orange">Secret Code Card</span>
+              <span class="mini-pill mini-pill--purple">Mystery Box Available</span>
+            </div>
+          </div>
+          <div class="shop-hero__visual">
+            <article class="shop-mini-tile shop-mini-tile--robot">
+              <div class="shop-mini-tile__art" data-character-art="robot"></div>
+            </article>
+            <article class="shop-mini-tile shop-mini-tile--duck">
+              <div class="shop-mini-tile__art" data-character-art="duck"></div>
+            </article>
+            <article class="shop-mini-tile shop-mini-tile--box">
+              <div class="shop-mini-tile__art" data-product-art="mystery-box"></div>
+            </article>
+            <article class="shop-mini-tile shop-mini-tile--mystery">
+              <div class="shop-mini-tile__art" data-character-art="mystery-variant"></div>
+            </article>
+          </div>
+        </section>
+        <div class="filter-row" id="shopFilters" aria-label="Shop filters"></div>
+        <div class="product-grid" id="shopGrid"></div>
       </section>
 
-      <section id="announcements">
-        <h3>Announcements</h3>
-        <div id="announcementsContent"></div>
+      <section class="page" id="collection" aria-labelledby="collection-title">
+        <div class="section-head section-head--wide">
+          <span class="chip chip--violet">LittleMen Collection</span>
+          <h1 id="collection-title">LittleMen Collection</h1>
+          <p>See the LittleMen lineup and discover what you still need for your shelf.</p>
+        </div>
+
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <section class="panel">
+          <div class="section-head section-head--row">
+            <div>
+              <span class="chip chip--blue">Collection board</span>
+              <h2>Owned, locked, and waiting for the shelf.</h2>
+            </div>
+            <div class="filter-row" id="collectionFilters" aria-label="Collection filters"></div>
+          </div>
+          <div class="collection-grid" id="collectionGrid"></div>
+        </section>
+
+        <section class="collection-bottom">
+          <article class="panel">
+            <div class="section-head">
+              <span class="chip chip--charcoal">Secret Variants</span>
+              <h2>Hidden Mystery Box pulls.</h2>
+            </div>
+            <div class="secret-grid" id="secretGrid"></div>
+          </article>
+
+          <article class="panel">
+            <div class="section-head">
+              <span class="chip chip--mint">Shelf view</span>
+              <h2>Not owned yet</h2>
+            </div>
+            <div class="shelf-grid" id="shelfGrid"></div>
+          </article>
+        </section>
       </section>
 
-      <section id="events">
-        <h3>Events</h3>
-        <div id="eventsContent"></div>
-      </section>
+      <section class="page" id="locker" aria-labelledby="locker-title">
+        <div class="section-head section-head--wide">
+          <span class="chip chip--gold">My LittleMen Locker</span>
+          <h1 id="locker-title">My LittleMen Locker</h1>
+          <p>Enter the code from your LittleMen package to unlock your digital collection.</p>
+        </div>
 
-      <section id="chat">
-        <h3>💬 Club Chat</h3>
-        <div id="chat-container">
-          <ul id="messages"></ul>
-          <div id="chat-input-area">
-            <input id="msgInput" type="text" placeholder="Say something..." autocomplete="off" />
-            <button id="sendBtn">Send</button>
+        <div class="locker-layout">
+          <aside class="panel unlock-panel">
+            <div class="unlock-panel__head">
+            <span class="unlock-panel__icon" data-icon="code"></span>
+            <div>
+                <h2>Unlock LittleRobot</h2>
+                <p>Use your code card.</p>
+            </div>
+            </div>
+
+            <label class="field-label" for="codeInput">Secret code</label>
+            <div class="unlock-row">
+              <input
+                id="codeInput"
+                class="code-input"
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="LMT-ROBOT-8K29"
+              >
+              <button id="unlockButton" class="button button--primary">Unlock LittleRobot</button>
+            </div>
+
+            <div class="unlock-actions">
+              <button id="scanButton" class="ghost-button">
+                <span class="ghost-button__icon" data-icon="code"></span>
+                <span>Scan Code</span>
+              </button>
+              <span class="unlock-actions__helper">Optional UI only for now.</span>
+            </div>
+
+            <div id="lockerStatus" class="status-card" role="status" aria-live="polite">
+              Your Locker is waiting.
+            </div>
+          </aside>
+
+          <div class="locker-dashboard">
+            <article class="panel">
+              <div class="section-head section-head--row">
+                <div>
+                  <span class="chip chip--blue">My Unlocked LittleMen</span>
+                  <h2>Unlocked and ready to pose.</h2>
+                </div>
+                <div class="filter-row" id="lockerFilters" aria-label="Locker filters"></div>
+              </div>
+              <div class="locker-grid" id="unlockedGrid"></div>
+            </article>
+
+            <div class="locker-split">
+              <article class="panel">
+                <div class="section-head">
+                  <span class="chip chip--charcoal">Locked LittleMen</span>
+                  <h2>Still waiting in the dark.</h2>
+                </div>
+                <div class="locker-grid locker-grid--locked" id="lockedGrid"></div>
+              </article>
+
+              <article class="panel">
+                <div class="section-head">
+                  <span class="chip chip--violet">Badges</span>
+                  <h2>Minimal collector markers.</h2>
+                </div>
+                <div class="badge-grid" id="badgeGrid"></div>
+              </article>
+            </div>
+
+            <article class="panel">
+              <div class="section-head">
+                <span class="chip chip--mint">Secret Variants</span>
+                <h2>Mystery Box exclusives</h2>
+              </div>
+              <div class="secret-grid" id="lockerSecretGrid"></div>
+            </article>
           </div>
         </div>
       </section>
     </main>
+
+    <nav class="tab-bar" aria-label="Mobile">
+      <button class="tab-bar__item active" data-page-target="home">
+        <span class="tab-bar__icon" data-icon="home"></span>
+        <small>Home</small>
+      </button>
+      <button class="tab-bar__item" data-page-target="shop">
+        <span class="tab-bar__icon" data-icon="shop"></span>
+        <small>Shop</small>
+      </button>
+      <button class="tab-bar__item" data-page-target="collection">
+        <span class="tab-bar__icon" data-icon="collection"></span>
+        <small>Collection</small>
+      </button>
+      <button class="tab-bar__item" data-page-target="locker">
+        <span class="tab-bar__icon" data-icon="locker"></span>
+        <small>Locker</small>
+      </button>
+    </nav>
   </div>
 
-  <!-- USERNAME PROMPT -->
-  <div id="usernamePrompt" class="overlay hidden">
-    <div class="prompt-box">
-      <h2>Enter your username</h2>
-      <input type="text" id="usernameInput" maxlength="40" placeholder="Your nickname" />
-      <button id="usernameSubmit">Join Chat</button>
+  <div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div>
+
+  <div id="unlockModal" class="unlock-modal hidden" aria-hidden="true">
+    <div class="unlock-modal__card">
+      <span class="chip chip--yellow">New unlock</span>
+      <div id="unlockModalArt" class="unlock-modal__art"></div>
+      <h2 id="unlockModalTitle">LittleRobot unlocked!</h2>
+      <p id="unlockModalText">He’s now in your Locker.</p>
+      <button id="closeModalButton" class="button button--primary">Awesome</button>
     </div>
   </div>
 
-  <!-- FIREBASE SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <script src="script.js"></script>
-
 </body>
 </html>
