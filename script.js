@@ -13,7 +13,7 @@ const products = [
     type: "Figure",
     status: "Best Seller",
     tags: ["Best Sellers", "Figures"],
-    price: "$7",
+    price: "$6",
     description: "A clockwork sentinel from the first toy forge, built to keep the desk safe and the batteries charged.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -26,7 +26,7 @@ const products = [
     type: "Figure",
     status: "Fan Favorite",
     tags: ["Best Sellers", "Figures"],
-    price: "$8",
+    price: "$7",
     description: "A bright canal scout said to guide lost collectibles back to the shelf with a cheerful wobble.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -39,7 +39,7 @@ const products = [
     type: "Figure",
     status: "Trending",
     tags: ["Figures", "New"],
-    price: "$8",
+    price: "$7",
     description: "A test-run hero wrapped in warning stripes, always the first to volunteer for rough landings.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -52,7 +52,7 @@ const products = [
     type: "Figure",
     status: "Popular Pick",
     tags: ["Figures", "New"],
-    price: "$8",
+    price: "$7",
     description: "A silent night runner who guards the case after lights-out and leaves only a red headband trace.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -65,7 +65,7 @@ const products = [
     type: "Figure",
     status: "Shelf Favorite",
     tags: ["Figures"],
-    price: "$8",
+    price: "$7",
     description: "A bone-house relic of the lineup, rattling in the dark like it knows every hidden code.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -78,7 +78,7 @@ const products = [
     type: "Figure",
     status: "Fresh Drop",
     tags: ["Figures", "New"],
-    price: "$8",
+    price: "$7",
     description: "A visitor from the last shelf over, mapping Earth in tiny steps and blinking back from the stars.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -91,7 +91,7 @@ const products = [
     type: "Figure",
     status: "New",
     tags: ["Figures", "New"],
-    price: "$8",
+    price: "$7",
     description: "A masked rooftop watcher who keeps the locker protected with a tiny cape and sharper instincts.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -104,7 +104,7 @@ const products = [
     type: "Figure",
     status: "Orbit Ready",
     tags: ["Figures", "New"],
-    price: "$8",
+    price: "$7",
     description: "A moon-walking explorer on a mission to bring home rare pulls from the far side of the display.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -117,7 +117,7 @@ const products = [
     type: "Figure",
     status: "Exclusive",
     tags: ["Figures", "Exclusive"],
-    price: "$8.25",
+    price: "$7.25",
     description: "A gilded prototype reserved for legends, rumored to power the luck of every collector who spots it.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -130,7 +130,7 @@ const products = [
     type: "Figure",
     status: "Wild",
     tags: ["Figures"],
-    price: "$7",
+    price: "$6",
     description: "A jungle-floor sneak that slips between cases and leaves a trail of bright green footprints.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -143,7 +143,7 @@ const products = [
     type: "Figure",
     status: "Adventure Pick",
     tags: ["Figures", "New"],
-    price: "$8.50",
+    price: "$7.50",
     description: "A salt-weathered deck captain who found treasure in the dark and never stopped chasing rarities.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -156,7 +156,7 @@ const products = [
     type: "Figure",
     status: "Desk Champ",
     tags: ["Figures"],
-    price: "$8",
+    price: "$7",
     description: "A ring-born champion who shadowboxes beside the shelf and never backs down from a collector's challenge.",
     badge: "Includes secret code card",
     ownedCopy: "In Your Locker",
@@ -169,7 +169,7 @@ const products = [
     type: "Mystery Box",
     status: "Mystery Box",
     tags: ["Mystery Box", "Best Sellers"],
-    price: "$18",
+    price: "$17",
     description: "A sealed crate of rumors that only opens for collectors brave enough to trade certainty for a hidden pull.",
     badge: "May contain a surprise variant",
     ownedCopy: "Mystery pull",
@@ -198,18 +198,18 @@ const secretVariants = [
   }
 ];
 
-const howSteps = [
-  { icon: "shop", title: "Pick a LittleRobot", text: "Choose your figure or try the Mystery Box." },
-  { icon: "code", title: "Get your secret code", text: "Every package comes with an unlock card." },
-  { icon: "locker", title: "Unlock it in your Locker", text: "Enter the package code in the app." },
-  { icon: "owned", title: "Build your collection", text: "Watch your shelf fill up over time." }
-];
-
 const favoriteBadges = [
   { id: "robot", label: "Best Seller" },
   { id: "duck", label: "Fan Favorite" },
   { id: "crash-dummy", label: "Trending" },
   { id: "ninja", label: "Popular Pick" }
+];
+
+const howSteps = [
+  { icon: "shop", title: "Pick a LittleRobot", text: "Choose your figure or try the Mystery Box." },
+  { icon: "code", title: "Get your secret code", text: "Every package comes with an unlock card." },
+  { icon: "locker", title: "Unlock it in your Locker", text: "Enter the package code in the app." },
+  { icon: "owned", title: "Build your collection", text: "Watch your shelf fill up over time." }
 ];
 
 const badgeRules = [

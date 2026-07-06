@@ -235,7 +235,7 @@ button {
   place-items: center;
   width: 62px;
   height: 62px;
-  border-radius: 22px;
+  border-radius: 50%;
   background: linear-gradient(180deg, #e6f6ff, #fff4cb);
   box-shadow: inset 0 -4px 0 rgba(36, 48, 85, 0.07);
   overflow: hidden;
@@ -741,7 +741,8 @@ button {
 .brand-lockup__badge img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  border-radius: 50%;
+  object-fit: cover;
   object-position: center;
 }
 
