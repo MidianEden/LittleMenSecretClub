@@ -1,4 +1,8 @@
 const storageKey = "littlemen-locker-v3";
+const plushySupabase = {
+  url: "https://agnxkonbawdvxjvriqsp.supabase.co",
+  anonKey: "sb_publishable_RPCTJzjBTCb8zQNjdbdf0Q_m5WsA9K7"
+};
 
 const pageIds = ["home", "shop", "collection", "locker"];
 const shopFilterOptions = ["All", "Best Sellers", "Figures", "Mystery Box", "New", "Exclusive"];
@@ -515,6 +519,9 @@ function productCard(product, options = {}) {
   const artMarkup = isMysteryBox ? renderMysteryBoxArt() : renderCharacterArt(product.art);
   const badgeClass = isMysteryBox ? "mini-pill mini-pill--gold" : isExclusive ? "mini-pill mini-pill--gold" : "mini-pill mini-pill--blue";
   const actionLabel = isMysteryBox ? "Try Mystery Box" : "Add to Cart";
+  const badgeMarkup = product.badge === "Includes secret code card"
+    ? ""
+    : `<span class="mini-pill ${isMysteryBox ? "mini-pill--charcoal" : "mini-pill--orange"}">${product.badge}</span>`;
 
   return `
     <article class="${cardClasses}">
@@ -527,7 +534,7 @@ function productCard(product, options = {}) {
       </div>
       <div class="product-art">${artMarkup}</div>
       <p>${product.description}</p>
-      <span class="mini-pill ${isMysteryBox ? "mini-pill--charcoal" : "mini-pill--orange"}">${product.badge}</span>
+      ${badgeMarkup}
       <div class="hero-actions">
         <button class="ghost-button" data-page-target="collection">View Toy</button>
         <button class="button button--primary">${actionLabel}</button>
@@ -936,7 +943,85 @@ function renderAll() {
   setSharedArt();
 }
 
+function bindPlushyWaitlist() {
+  const stage = document.querySelector("[data-waitlist-stage]");
+  const openButton = document.querySelector("[data-open-envelope]");
+  const form = document.querySelector("[data-plushy-form]");
+  const status = document.querySelector("[data-waitlist-status]");
+
+  if (!stage || !openButton || !form || !status) {
+    return;
+  }
+
+  openButton.addEventListener("click", () => {
+    stage.classList.add("is-open");
+    document.body.classList.add("waitlist-open");
+    window.setTimeout(() => {
+      form.querySelector("input")?.focus();
+    }, 520);
+  });
+
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    status.textContent = "Sending...";
+    status.classList.remove("success", "error");
+
+    try {
+      if (!plushySupabase.url || !plushySupabase.anonKey) {
+        throw new Error("Supabase is not configured");
+      }
+
+      const row = {
+        email: String(data.email || "").trim().toLowerCase(),
+        would_buy: data.would_buy,
+        preferred_size: data.preferred_size,
+        price_comfort: data.price_comfort,
+        favorite_character: String(data.favorite_character || "").trim() || null,
+        guardian_email: String(data.guardian_email || "").trim().toLowerCase() || null
+      };
+
+      const response = await fetch(`${plushySupabase.url}/rest/v1/plushymen_waitlist`, {
+        method: "POST",
+        headers: {
+          apikey: plushySupabase.anonKey,
+          Authorization: `Bearer ${plushySupabase.anonKey}`,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal"
+        },
+        body: JSON.stringify(row)
+      });
+
+      if (!response.ok) {
+        throw new Error("Waitlist submission failed");
+      }
+
+      form.reset();
+      status.textContent = "You are on the list. Thank you.";
+      status.classList.add("success");
+    } catch {
+      status.textContent = "Supabase needs to be connected before launch.";
+      status.classList.add("error");
+    }
+  });
+}
+
 function init() {
+  if (document.body.classList.contains("waitlist-mode")) {
+    bindPlushyWaitlist();
+    return;
+  }
+
+  document.querySelectorAll("[data-app-logo-src]").forEach(image => {
+    image.src = image.dataset.appLogoSrc;
+  });
+
   renderAll();
   bindEvents();
   setActivePage(activePage);

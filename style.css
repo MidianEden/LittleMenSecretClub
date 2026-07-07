@@ -177,6 +177,302 @@ button {
   padding: 14px 0 96px;
 }
 
+.waitlist-mode .app-shell,
+.waitlist-mode .confetti-layer,
+.waitlist-mode .unlock-modal,
+.waitlist-mode .ambient {
+  display: none !important;
+}
+
+.waitlist-mode {
+  background:
+    radial-gradient(circle at 8% 9%, rgba(150, 208, 255, 0.26), transparent 24%),
+    radial-gradient(circle at 91% 8%, rgba(255, 223, 132, 0.28), transparent 24%),
+    radial-gradient(circle at 55% 84%, rgba(164, 202, 255, 0.12), transparent 32%),
+    linear-gradient(180deg, #fbfdff 0%, #f3f8ff 100%);
+}
+
+.waitlist-page {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 100vh;
+  place-items: start center;
+  padding: clamp(48px, 9vh, 92px) 16px 40px;
+}
+
+.mail-stage {
+  display: grid;
+  gap: clamp(82px, 10vh, 116px);
+  justify-items: center;
+  width: min(980px, 100%);
+}
+
+.mail-copy {
+  display: grid;
+  gap: 26px;
+  max-width: 760px;
+  text-align: center;
+  transition: opacity 180ms ease;
+}
+
+.mail-copy h1 {
+  margin: 0;
+  font-family: "Baloo 2", sans-serif;
+  color: #16245d;
+  font-size: clamp(4.45rem, 7.9vw, 7.5rem);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: 0;
+  text-shadow:
+    0 5px 0 rgba(22, 36, 93, 0.07),
+    0 14px 24px rgba(22, 36, 93, 0.1);
+}
+
+.mail-copy p {
+  margin: 0;
+  color: #586492;
+  font-size: clamp(1.35rem, 1.75vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.envelope {
+  position: relative;
+  width: min(520px, calc(100vw - 40px));
+  aspect-ratio: 1.8 / 1;
+  min-height: 0;
+}
+
+.envelope__back,
+.envelope__front {
+  position: absolute;
+  inset: 0;
+  border: 2.5px solid #15245e;
+  border-radius: 10px;
+  transition: opacity 260ms ease;
+}
+
+.envelope__back {
+  background: rgba(255, 255, 255, 0.36);
+  box-shadow: none;
+}
+
+.envelope__back::before {
+  content: "";
+  position: absolute;
+  inset: -2.5px -2.5px auto;
+  height: 50%;
+  border: 2.5px solid #15245e;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: rgba(255, 255, 255, 0.34);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.envelope__front {
+  z-index: 3;
+  overflow: hidden;
+  background:
+    linear-gradient(28deg, transparent calc(50% - 1.2px), #15245e 50%, transparent calc(50% + 1.2px)) left top / 50% 54% no-repeat,
+    linear-gradient(-28deg, transparent calc(50% - 1.2px), #15245e 50%, transparent calc(50% + 1.2px)) right top / 50% 54% no-repeat,
+    rgba(255, 255, 255, 0.2);
+}
+
+.stamp-button {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: clamp(78px, 8.2vw, 94px);
+  height: clamp(78px, 8.2vw, 94px);
+  padding: 0;
+  border: 0;
+  border-radius: 22px;
+  background: transparent;
+  box-shadow: none;
+  transform: translate(-50%, -50%);
+  transition: transform 160ms ease, opacity 160ms ease, filter 160ms ease;
+}
+
+.stamp-button:hover {
+  filter: brightness(0.92);
+  transform: translate(-50%, -54%);
+}
+
+.stamp-button img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+}
+
+.plushy-form {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 14px;
+  width: min(620px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: 24px;
+  border: 3px solid var(--line);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 18px 36px rgba(31, 44, 92, 0.12);
+  opacity: 0;
+  transform: none;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.plushy-form h2 {
+  margin: 0;
+  font-family: "Baloo 2", sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  line-height: 1;
+}
+
+.waitlist-field {
+  display: grid;
+  gap: 7px;
+  color: var(--ink);
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1rem;
+}
+
+.waitlist-field input {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 15px;
+  border: 2px solid rgba(50, 64, 111, 0.42);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.waitlist-field input:focus {
+  border-color: #56b8ff;
+  box-shadow: 0 0 0 4px rgba(86, 184, 255, 0.16);
+}
+
+.waitlist-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.waitlist-group legend {
+  width: 100%;
+  margin-bottom: 2px;
+  font-family: "Baloo 2", sans-serif;
+  font-size: 1rem;
+}
+
+.waitlist-group label {
+  position: relative;
+  display: inline-flex;
+}
+
+.waitlist-group input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.waitlist-group span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 9px 13px;
+  border: 2px solid rgba(50, 64, 111, 0.42);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 800;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.waitlist-group input:checked + span {
+  border-color: var(--line);
+  background: linear-gradient(180deg, #fff6ce, #ffb16d);
+  transform: translateY(-1px);
+}
+
+.plushy-form .button {
+  width: 100%;
+}
+
+.waitlist-note {
+  margin: 0;
+  color: var(--ink-soft);
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.mail-stage.is-open {
+  gap: 0;
+  width: min(760px, 100%);
+}
+
+.waitlist-mode.waitlist-open .waitlist-page,
+.waitlist-page:has(.mail-stage.is-open) {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.mail-stage.is-open .mail-copy {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mail-stage.is-open .envelope {
+  width: min(760px, calc(100vw - 24px));
+  min-height: calc(100vh - 32px);
+  aspect-ratio: auto;
+}
+
+.mail-stage.is-open .envelope__back,
+.mail-stage.is-open .envelope__front {
+  opacity: 0;
+}
+
+.mail-stage.is-open .stamp-button {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.mail-stage.is-open .plushy-form {
+  z-index: 4;
+  align-content: start;
+  opacity: 1;
+  pointer-events: auto;
+  width: min(720px, 100%);
+  min-height: calc(100vh - 32px);
+  transform: none;
+}
+
+.waitlist-note.success {
+  color: #287847;
+}
+
+.waitlist-note.error {
+  color: #b2334d;
+}
+
 .top-nav {
   position: sticky;
   top: 0;
@@ -2102,6 +2398,47 @@ button {
   }
 
   .tab-bar {
+    display: none;
+  }
+}
+
+@media (max-width: 759px) {
+  .waitlist-page {
+    place-items: start center;
+    padding-top: 34px;
+  }
+
+  .mail-stage {
+    gap: 58px;
+  }
+
+  .mail-copy {
+    gap: 18px;
+  }
+
+  .mail-copy h1 {
+    font-size: clamp(3.4rem, 16vw, 5rem);
+  }
+
+  .mail-copy p {
+    font-size: clamp(1.05rem, 5vw, 1.35rem);
+  }
+
+  .stamp-button {
+    width: 72px;
+    height: 72px;
+  }
+
+  .plushy-form {
+    width: calc(100% - 16px);
+    padding: 18px;
+  }
+
+  .mail-stage.is-open .plushy-form {
+    transform: translateY(0) scale(1);
+  }
+
+  .mail-stage.is-open .mail-copy p {
     display: none;
   }
 }

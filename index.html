@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LittleMenToys</title>
+  <title>PlushyMen Waitlist</title>
   <meta
     name="description"
-    content="LittleMenToys is a colorful app-like collectible toy site for articulated 3D printed fidget figures, Mystery Boxes, and digital Locker unlocks."
+    content="Join the PlushyMen waitlist for early access to plush LittleMen collectibles."
   >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
   >
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="waitlist-mode">
   <div class="ambient" aria-hidden="true">
     <span class="ambient-shape ambient-shape--block"></span>
     <span class="ambient-shape ambient-shape--capsule"></span>
@@ -26,11 +26,70 @@
     <span class="ambient-dot ambient-dot--pink"></span>
   </div>
 
+  <main class="waitlist-page" aria-labelledby="waitlist-title">
+    <section class="mail-stage" data-waitlist-stage>
+      <div class="mail-copy">
+        <h1 id="waitlist-title">PlushyMen waitlist</h1>
+        <p>Tap the stamp to open the envelope.</p>
+      </div>
+
+      <div class="envelope" aria-live="polite">
+        <div class="envelope__back"></div>
+        <form class="plushy-form" data-plushy-form>
+          <h2>Join the PlushyMen list</h2>
+
+          <label class="waitlist-field">
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          </label>
+
+          <fieldset class="waitlist-group">
+            <legend>Would you buy Plushy LittleMen?</legend>
+            <label><input type="radio" name="would_buy" value="Yes" required><span>Yes</span></label>
+            <label><input type="radio" name="would_buy" value="Maybe"><span>Maybe</span></label>
+          </fieldset>
+
+          <fieldset class="waitlist-group">
+            <legend>Preferred size</legend>
+            <label><input type="radio" name="preferred_size" value="12 inch" required><span>12 inch</span></label>
+            <label><input type="radio" name="preferred_size" value="15 inch"><span>15 inch</span></label>
+            <label><input type="radio" name="preferred_size" value="20 inch"><span>20 inch</span></label>
+          </fieldset>
+
+          <fieldset class="waitlist-group">
+            <legend>Price comfort</legend>
+            <label><input type="radio" name="price_comfort" value="$39" required><span>$39</span></label>
+            <label><input type="radio" name="price_comfort" value="$49"><span>$49</span></label>
+            <label><input type="radio" name="price_comfort" value="$59"><span>$59</span></label>
+            <label><input type="radio" name="price_comfort" value="$69"><span>$69</span></label>
+          </fieldset>
+
+          <label class="waitlist-field">
+            <span>Favorite LittleMen character/name</span>
+            <input name="favorite_character" type="text" placeholder="LittleRobot, LittleNinja, your idea...">
+          </label>
+
+          <label class="waitlist-field">
+            <span>Parent/guardian email if under 18</span>
+            <input name="guardian_email" type="email" autocomplete="email" placeholder="guardian@example.com">
+          </label>
+
+          <button class="button button--primary" type="submit">Submit</button>
+          <p class="waitlist-note" data-waitlist-status>We will only use this for PlushyMen updates.</p>
+        </form>
+        <div class="envelope__front"></div>
+        <button class="stamp-button" type="button" data-open-envelope aria-label="Open the PlushyMen waitlist envelope">
+          <img src="assets/plushymen-stamp.png" alt="">
+        </button>
+      </div>
+    </section>
+  </main>
+
   <div class="app-shell">
     <header class="top-nav">
       <button class="brand-lockup" data-page-target="home" aria-label="LittleMenToys Home">
         <span class="brand-lockup__badge">
-          <img src="assets/littlemen-logo.png" alt="LittleMen logo">
+          <img data-app-logo-src="assets/littlemen-logo.png" alt="LittleMen logo">
         </span>
         <span class="brand-lockup__text">
           <strong>LittleMenToys</strong>
